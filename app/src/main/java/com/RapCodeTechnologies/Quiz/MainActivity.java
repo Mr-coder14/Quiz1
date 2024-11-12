@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import Fragments.BookMarkFragment;
 import Fragments.HomeFragment;
 import Fragments.LeaderFragment;
 import Fragments.ProfileFragment;
-
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
