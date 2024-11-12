@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -274,53 +275,56 @@
                     app:tint="@color/PrimaryColor"/>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:padding="8dp"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
             android:id="@+id/lodoutbtn"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/white_bg"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="17dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="2dp"
+            android:background="@drawable/white_bg"
+            android:elevation="8dp"
             android:orientation="horizontal"
-            >
+            android:padding="8dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_circle"
-                android:padding="10dp"
-                >
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/baseline_logout_24"
-                    app:tint="@color/PrimaryColor"/>
+                    app:tint="@color/PrimaryColor" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
                 android:text="Log Out"
                 android:textColor="#DC4237"
-                android:textSize="17sp"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:gravity="start"
-                android:fontFamily="@font/lato"
-                android:layout_gravity="center"/>
+                android:textSize="17sp" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_circle"
-                android:padding="10dp"
-                >
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/baseline_keyboard_arrow_right_24"
-                    app:tint="@color/PrimaryColor"/>
+                    app:tint="@color/PrimaryColor" />
             </LinearLayout>
         </LinearLayout>
 

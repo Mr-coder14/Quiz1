@@ -3,11 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Fragments.HomeFragment">
-
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello home" />
+        android:layout_height="200dp"
+        android:id="@+id/quiztimee"
+        android:background="@drawable/white_box"
+        android:elevation="8dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:text="Start The Quiz" />
+    </LinearLayout>
+
+
 
 </FrameLayout>
