@@ -98,10 +98,10 @@ public class QuizQuestionFragment extends Fragment {
         Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT);
         View snackbarView = snackbar.getView();
 
-        // Apply background color
+
         snackbarView.setBackgroundColor(color);
 
-        // Show the Snackbar
+
         snackbar.show();
     }
 
