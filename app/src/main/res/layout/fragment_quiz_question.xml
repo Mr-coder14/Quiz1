@@ -11,21 +11,28 @@
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
         android:text="What is Interface in java Programming is it a function?"
-        android:textSize="22sp"
+        android:textSize="27sp"
         android:textColor="@color/black"
         android:paddingBottom="16dp"
         android:textStyle="bold"
         android:fontFamily="@font/librebaskervillebold"
         android:gravity="start" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/imageview"
+        android:background="@drawable/white_box"/>
 
 
     <Button
         android:id="@+id/optionA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:text="Option A" />
 
     <Button

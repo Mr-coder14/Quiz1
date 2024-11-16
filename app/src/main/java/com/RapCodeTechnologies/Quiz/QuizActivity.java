@@ -34,6 +34,7 @@ public class QuizActivity extends AppCompatActivity {
     private ProgressBar quizprogress;
     private ImageButton imageButton;
     private int score = 0;
+    private ProgressBar progressBar1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +42,11 @@ public class QuizActivity extends AppCompatActivity {
         quiztitle=findViewById(R.id.quiztitile);
         timer=findViewById(R.id.timer);
         quizprogress=findViewById(R.id.progressquiz);
+        progressBar1=findViewById(R.id.progressbaroverall);
         imageButton=findViewById(R.id.backquiz);
         quizDatabase = FirebaseDatabase.getInstance().getReference("quiz_questions");
         loadQuestionsFromFirebase();
+        progressBar1.setVisibility(View.VISIBLE);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +84,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public void loadNextQuestion() {
         if (currentQuestionIndex < questionList.size()) {
+            progressBar1.setVisibility(View.GONE);
             findViewById(R.id.timer).setVisibility(View.VISIBLE);
             findViewById(R.id.progressquiz).setVisibility(View.VISIBLE);
             findViewById(R.id.backquiz).setVisibility(View.VISIBLE);
@@ -136,6 +140,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void showResultFragment() {
         findViewById(R.id.timer).setVisibility(View.GONE);
+        progressBar1.setVisibility(View.GONE);
         findViewById(R.id.progressquiz).setVisibility(View.GONE);
         findViewById(R.id.quiztitile).setVisibility(View.GONE);
         findViewById(R.id.timeriamge).setVisibility(View.GONE);
