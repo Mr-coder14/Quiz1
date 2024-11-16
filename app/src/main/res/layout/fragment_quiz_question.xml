@@ -4,17 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="1dp">
+
 
 
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sample Question?"
-        android:textSize="18sp"
+        android:text="What is Interface in java Programming is it a function?"
+        android:textSize="22sp"
+        android:textColor="@color/black"
         android:paddingBottom="16dp"
-        android:gravity="center_horizontal" />
+        android:textStyle="bold"
+        android:fontFamily="@font/librebaskervillebold"
+        android:gravity="start" />
 
 
     <Button

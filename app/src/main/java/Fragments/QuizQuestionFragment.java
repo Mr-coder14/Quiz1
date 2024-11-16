@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.RapCodeTechnologies.Quiz.QuizActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class QuizQuestionFragment extends Fragment {
@@ -72,14 +73,36 @@ public class QuizQuestionFragment extends Fragment {
         return view;
     }
     private void checkAnswer(String selectedAnswer) {
+        boolean isCorrect=false;
         if (selectedAnswer.equals(correctAnswer)) {
+            isCorrect = true;
+
+            showSnackbar(isCorrect);
 
             if (onCorrectAnswerListener != null) {
                 onCorrectAnswerListener.onCorrectAnswer();
             }
             ((QuizActivity) getActivity()).loadNextQuestion();
         } else {
+            showSnackbar(isCorrect);
             ((QuizActivity) getActivity()).loadNextQuestion();
         }
     }
+    private void showSnackbar(boolean isCorrect) {
+        String message = isCorrect
+                ? "Correct Answer!"
+                : "Wrong! ";
+
+        int color = isCorrect ? android.graphics.Color.parseColor("#4CAF50") : android.graphics.Color.parseColor("#F44336"); // Green and Red
+
+        Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT);
+        View snackbarView = snackbar.getView();
+
+        // Apply background color
+        snackbarView.setBackgroundColor(color);
+
+        // Show the Snackbar
+        snackbar.show();
+    }
+
 }
