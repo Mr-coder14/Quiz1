@@ -27,10 +27,10 @@ public class QuizActivity extends AppCompatActivity {
     private DatabaseReference quizDatabase;
     private List<Question> questionList = new ArrayList<>();
     private CountDownTimer countDownTimer;
-    private static final int QUESTION_TIME = 30000; // 30 seconds in milliseconds
+    private static final int QUESTION_TIME = 30000;
     private static final int TIMER_INTERVAL = 1000;
     private int currentQuestionIndex = 0;
-    private TextView quiztitle,timer;
+    private TextView quiztitle,timer,questionCount;
     private ProgressBar quizprogress;
     private ImageButton imageButton;
     private int score = 0;
@@ -39,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        questionCount = findViewById(R.id.questioncount);
         quiztitle=findViewById(R.id.quiztitile);
         timer=findViewById(R.id.timer);
         quizprogress=findViewById(R.id.progressquiz);
@@ -70,7 +71,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
+
             }
         });
     }
@@ -78,7 +79,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // Cancel the timer when activity is destroyed
+            countDownTimer.cancel();
         }
     }
 
@@ -90,25 +91,42 @@ public class QuizActivity extends AppCompatActivity {
             findViewById(R.id.backquiz).setVisibility(View.VISIBLE);
             findViewById(R.id.quiztitile).setVisibility(View.VISIBLE);
             findViewById(R.id.timeriamge).setVisibility(View.VISIBLE);
-            // Load the next question fragment
+            findViewById(R.id.questioncount).setVisibility(View.VISIBLE);
+            findViewById(R.id.se).setVisibility(View.VISIBLE);
+            String questionCountText = (currentQuestionIndex + 1) + "/" + questionList.size();
+            questionCount.setText(questionCountText);
+
+
+
             Question question = questionList.get(currentQuestionIndex);
+            question.setQuestionIndex(currentQuestionIndex);
+            ProgressBar imageLoadProgressBar = findViewById(R.id.imageLoadProgressBar);
+            imageLoadProgressBar.setVisibility(View.VISIBLE);
             QuizQuestionFragment fragment = QuizQuestionFragment.newInstance(
                     question.getQuestion(),
                     question.getOptionA(),
                     question.getOptionB(),
                     question.getOptionC(),
                     question.getOptionD(),
-                    question.getCorrectAnswer()
+                    question.getCorrectAnswer(),
+                    question.getQuestionIndex()
             );
-            fragment.setOnCorrectAnswerListener(() -> score++);
-            quizprogress.setProgress((currentQuestionIndex + 1) * 100 / questionList.size());
+            fragment.setOnImageLoadListener(() -> {
+                // Hide the progress bar once the image has loaded
+                imageLoadProgressBar.setVisibility(View.GONE);
 
-            // Start timer for the current question
-            startTimer();
+                // Set up the question and start the timer
+                fragment.setOnCorrectAnswerListener(() -> score++);
+                quizprogress.setProgress((currentQuestionIndex + 1) * 100 / questionList.size());
+                startTimer();
+            });
+
+
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainerquiz, fragment);
             transaction.commit();
+
 
             currentQuestionIndex++;
         } else {
@@ -118,14 +136,14 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void startTimer() {
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // Cancel any existing timer
+            countDownTimer.cancel();
         }
 
         countDownTimer = new CountDownTimer(QUESTION_TIME, TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // Update the timer text
-                timer.setText(String.valueOf(millisUntilFinished / 1000));
+                timer.setText(String.valueOf(millisUntilFinished / 1000  + "s"));
             }
 
             @Override
@@ -143,12 +161,15 @@ public class QuizActivity extends AppCompatActivity {
         progressBar1.setVisibility(View.GONE);
         findViewById(R.id.progressquiz).setVisibility(View.GONE);
         findViewById(R.id.quiztitile).setVisibility(View.GONE);
+        findViewById(R.id.se).setVisibility(View.GONE);
         findViewById(R.id.timeriamge).setVisibility(View.GONE);
+        findViewById(R.id.questioncount).setVisibility(View.GONE);
         findViewById(R.id.backquiz).setVisibility(View.GONE);
         ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size());
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainerquiz, resultFragment);
         transaction.commit();
+
     }
     }

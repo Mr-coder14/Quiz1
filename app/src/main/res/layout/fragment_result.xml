@@ -3,18 +3,76 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/resultTextView"
-        android:layout_width="wrap_content"
+    android:background="#ff8811">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        >
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You Won"
+            android:textSize="30dp"
+            android:fontFamily="@font/librebaskervillebold"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:padding="16dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Score"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:padding="16dp" />
+        android:layout_weight="2"
+        android:background="#ffffff"
+        android:elevation="8dp"
+        app:cardCornerRadius="8dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageViewe"
+                android:layout_width="137dp"
+                android:layout_height="137dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/person3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="#febb3a"
+                app:strokeWidth="3dp" />
 
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                app:layout_constraintBottom_toTopOf="@+id/shapeableImageViewe"
+                app:layout_constraintEnd_toEndOf="@+id/shapeableImageViewe"
+                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewe"
+                app:srcCompat="@drawable/crown" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_yellow"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewe"
+                app:layout_constraintEnd_toEndOf="@+id/shapeableImageViewe"
+                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewe"
+                app:layout_constraintTop_toBottomOf="@+id/shapeableImageViewe" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </LinearLayout>

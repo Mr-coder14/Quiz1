@@ -3,6 +3,16 @@ package Models;
 public class Question {
     private String question;
     private String optionA;
+    private int questionIndex;
+
+    public int getQuestionIndex() {
+        return questionIndex;
+    }
+
+    public void setQuestionIndex(int questionIndex) {
+        this.questionIndex = questionIndex;
+    }
+
     private String optionB;
     private String optionC;
     private String optionD;
