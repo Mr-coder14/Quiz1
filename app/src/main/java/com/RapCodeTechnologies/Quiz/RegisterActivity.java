@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     if (user != null) {
                         String userId = user.getUid();
-                        User newUser = new User(name, emaill, phno,userId);
+                        User newUser = new User(name, emaill, phno,userId,0);
                         databaseReference.child(userId).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

@@ -167,6 +167,7 @@ public class QuizQuestionFragment extends Fragment {
             showSnackbar(isCorrect);
             ((QuizActivity) getActivity()).loadNextQuestion();
         }
+
     }
     private void shakeScreen() {
         if (getActivity() != null) {

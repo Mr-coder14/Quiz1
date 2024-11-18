@@ -2,69 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="@drawable/gray_bg"
-    android:layout_marginTop="13dp"
-    android:layout_marginBottom="2dp"
-    android:elevation="14dp"
-    android:padding="10dp"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/nno"
-        android:text="1"
-        android:layout_marginRight="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/lato"
-        />
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:shapeAppearanceOverlay="@style/CircleImage"
-        android:src="@drawable/person3"
-        android:id="@+id/nthplaceimageview"
-        />
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="1"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/black"
-        android:layout_weight="1"
-        android:id="@+id/nthplaceusername"
-        android:textSize="18sp"
-        android:fontFamily="@font/lato"
-        android:text="Parmugilan S"
-        android:layout_gravity="center_vertical"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-
+        android:background="@drawable/gray_bg"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="2dp"
         android:orientation="horizontal"
-        android:padding="6dp">
-
-        <ImageView
-            android:id="@+id/fdfe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/garnet" />
-
+        android:elevation="14dp"
+        android:padding="10dp">
         <TextView
-            android:id="@+id/nthhplacecoin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_weight="1"
-            android:text="0000"
+            android:layout_gravity="center"
+            android:id="@+id/nno"
+            android:text="1"
+            android:layout_marginRight="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/lato"
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            android:src="@drawable/person3"
+            android:id="@+id/nthplaceimageview"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:layout_marginLeft="15dp"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:id="@+id/nthplaceusername"
+            android:textSize="18sp"
+            android:fontFamily="@font/lato"
+            android:text="Parmugilan S"
+            android:layout_gravity="center_vertical"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <ImageView
+                android:id="@+id/fdfe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/garnet" />
+
+            <TextView
+                android:id="@+id/nthhplacecoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_weight="1"
+                android:text="0000"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
+
 
 
 </LinearLayout>

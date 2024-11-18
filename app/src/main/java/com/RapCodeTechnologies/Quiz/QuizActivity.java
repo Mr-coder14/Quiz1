@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final int QUESTION_TIME = 30000;
     private static final int TIMER_INTERVAL = 1000;
     private int currentQuestionIndex = 0;
+    private String userid;
     private TextView quiztitle,timer,questionCount;
     private ProgressBar quizprogress;
     private ImageButton imageButton;
@@ -43,6 +45,7 @@ public class QuizActivity extends AppCompatActivity {
         quiztitle=findViewById(R.id.quiztitile);
         timer=findViewById(R.id.timer);
         quizprogress=findViewById(R.id.progressquiz);
+        userid= FirebaseAuth.getInstance().getUid();
         progressBar1=findViewById(R.id.progressbaroverall);
         imageButton=findViewById(R.id.backquiz);
         quizDatabase = FirebaseDatabase.getInstance().getReference("quiz_questions");
@@ -85,23 +88,9 @@ public class QuizActivity extends AppCompatActivity {
 
     public void loadNextQuestion() {
         if (currentQuestionIndex < questionList.size()) {
-            progressBar1.setVisibility(View.GONE);
-            findViewById(R.id.timer).setVisibility(View.VISIBLE);
-            findViewById(R.id.progressquiz).setVisibility(View.VISIBLE);
-            findViewById(R.id.backquiz).setVisibility(View.VISIBLE);
-            findViewById(R.id.quiztitile).setVisibility(View.VISIBLE);
-            findViewById(R.id.timeriamge).setVisibility(View.VISIBLE);
-            findViewById(R.id.questioncount).setVisibility(View.VISIBLE);
-            findViewById(R.id.se).setVisibility(View.VISIBLE);
-            String questionCountText = (currentQuestionIndex + 1) + "/" + questionList.size();
-            questionCount.setText(questionCountText);
-
-
-
             Question question = questionList.get(currentQuestionIndex);
             question.setQuestionIndex(currentQuestionIndex);
-            ProgressBar imageLoadProgressBar = findViewById(R.id.imageLoadProgressBar);
-            imageLoadProgressBar.setVisibility(View.VISIBLE);
+
             QuizQuestionFragment fragment = QuizQuestionFragment.newInstance(
                     question.getQuestion(),
                     question.getOptionA(),
@@ -111,29 +100,25 @@ public class QuizActivity extends AppCompatActivity {
                     question.getCorrectAnswer(),
                     question.getQuestionIndex()
             );
-            fragment.setOnImageLoadListener(() -> {
-                // Hide the progress bar once the image has loaded
-                imageLoadProgressBar.setVisibility(View.GONE);
 
+            fragment.setOnImageLoadListener(() -> {
                 // Set up the question and start the timer
                 fragment.setOnCorrectAnswerListener(() -> score++);
-                quizprogress.setProgress((currentQuestionIndex + 1) * 100 / questionList.size());
+                quizprogress.setProgress((currentQuestionIndex - 1) * 100 / questionList.size());
                 startTimer();
             });
-
-
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainerquiz, fragment);
             transaction.commit();
 
-
             currentQuestionIndex++;
         } else {
-            // All questions have been answered, load the ResultFragment to display the score
+            // All questions have been answered, directly show the result
             showResultFragment();
         }
     }
+
     private void startTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -157,19 +142,21 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showResultFragment() {
+        // Hide all UI components related to the quiz question
         findViewById(R.id.timer).setVisibility(View.GONE);
         progressBar1.setVisibility(View.GONE);
         findViewById(R.id.progressquiz).setVisibility(View.GONE);
         findViewById(R.id.quiztitile).setVisibility(View.GONE);
-        findViewById(R.id.se).setVisibility(View.GONE);
         findViewById(R.id.timeriamge).setVisibility(View.GONE);
+        findViewById(R.id.layouttt).setVisibility(View.GONE);
         findViewById(R.id.questioncount).setVisibility(View.GONE);
         findViewById(R.id.backquiz).setVisibility(View.GONE);
-        ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size());
 
+        // Immediately load the ResultFragment
+        ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size(), userid);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainerquiz, resultFragment);
         transaction.commit();
+    }
 
-    }
-    }
+}

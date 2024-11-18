@@ -1,78 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="#ff8811">
-    <LinearLayout
+    android:orientation="vertical">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/scvieww"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
         >
-        <TextView
-            android:id="@+id/resultTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You Won"
-            android:textSize="30dp"
-            android:fontFamily="@font/librebaskervillebold"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:padding="16dp" />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:background="#ffffff"
-        android:elevation="8dp"
-        app:cardCornerRadius="8dp"
+        android:orientation="vertical"
         >
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/shapeableImageViewe"
-                android:layout_width="137dp"
-                android:layout_height="137dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/person3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                app:strokeColor="#febb3a"
-                app:strokeWidth="3dp" />
+            android:background="#ff8811"
+            android:layout_weight="2"
+            android:padding="16dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/resultTextdsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Result"
+                android:textSize="15dp"
+                android:fontFamily="@font/lato"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="10dp" />
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You Won"
+                android:textSize="30dp"
+                android:fontFamily="@font/librebaskervillebold"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="16dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                >
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:lottie_rawRes="@raw/coinanimation"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/lottieanimationcoin"
+                    />
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:lottie_rawRes="@raw/coinanimation"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/lottieanimationcoinspattered"
+                    />
 
-            <ImageView
-                android:id="@+id/imageView10"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/eranedcointext"
+                android:text="coins"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:textSize="19sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:background="@drawable/white_bg"
+            android:orientation="vertical"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/shapeableImageViewe"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/person3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleImage"
+                    app:strokeColor="#febb3a"
+                    app:strokeWidth="3dp" />
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/shapeableImageViewe"
+                    app:layout_constraintEnd_toEndOf="@+id/shapeableImageViewe"
+                    app:layout_constraintStart_toStartOf="@+id/shapeableImageViewe"
+                    app:srcCompat="@drawable/crown" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/resultusername"
+                android:text="None"
+                android:textAlignment="center"
+                android:lines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="-4dp"
-                app:layout_constraintBottom_toTopOf="@+id/shapeableImageViewe"
-                app:layout_constraintEnd_toEndOf="@+id/shapeableImageViewe"
-                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewe"
-                app:srcCompat="@drawable/crown" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_cir3"
+                android:backgroundTint="#AC844E"
+                android:orientation="horizontal"
+                android:padding="6dp">
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_yellow"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="23sp"
+                <ImageView
+                    android:id="@+id/fdfe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/garnet" />
+
+                <TextView
+                    android:id="@+id/resultcoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_weight="1"
+                    android:text="0000"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+                <TextView
+                    android:id="@+id/addingcoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:text=" + 0000"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_bg"
+                android:layout_gravity="center"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageViewe"
-                app:layout_constraintEnd_toEndOf="@+id/shapeableImageViewe"
-                app:layout_constraintStart_toStartOf="@+id/shapeableImageViewe"
-                app:layout_constraintTop_toBottomOf="@+id/shapeableImageViewe" />
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato"
+                android:text="Start Again"
+                android:textColor="@color/white"
+                android:id="@+id/stagain"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_bg"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato"
+                android:backgroundTint="@color/gray"
+                android:id="@+id/backtomenu"
+                android:text="Back To Menu"
+                />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    </ScrollView>
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/PrimaryColor"
+        android:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

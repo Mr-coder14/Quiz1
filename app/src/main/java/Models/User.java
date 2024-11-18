@@ -1,29 +1,32 @@
 package Models;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-
 public class User implements Parcelable {
     private String name;
     private String email;
     private String userid;
     private String phno;
+    private int coin;
     private int messagecount;
-
     public int getMessagecount() {
         return messagecount;
     }
-
     public void setMessagecount(int messagecount) {
         this.messagecount = messagecount;
     }
+    public User() {
+    }
+    public int getCoin() {
+        return coin;
+    }
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
 
-    // Default constructor
-    public User() {}
 
-    // Constructor with parameters
-    public User(String name, String email, String phno, String userid) {
+    public User(String name, String email, String phno, String userid,int coin) {
         this.name = name;
+        this.coin=coin;
         this.email = email;
         this.phno = phno;
         this.userid = userid;
@@ -35,7 +38,7 @@ public class User implements Parcelable {
         this.userid = userid;
     }
 
-    // Getters and Setters
+
     public String getName() {
         return name;
     }
@@ -76,6 +79,7 @@ public class User implements Parcelable {
     protected User(Parcel in) {
         name = in.readString();
         email = in.readString();
+        coin=in.readInt();
         userid = in.readString();
         phno = in.readString();
     }
@@ -101,6 +105,7 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(email);
+        dest.writeInt(coin);
         dest.writeString(userid);
         dest.writeString(phno);
     }

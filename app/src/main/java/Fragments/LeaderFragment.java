@@ -2,6 +2,7 @@ package Fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,8 @@ public class LeaderFragment extends Fragment {
     private RecyclerView recyclerView;
     private LeadersAdaptor adaptor;
     private String userid;
+    private AppCompatButton globalLeaderBtn;
+    private AppCompatButton friendLeaderBtn;
 
     public LeaderFragment() {
 
@@ -37,6 +40,8 @@ public class LeaderFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_leader, container, false);
         recyclerView=view.findViewById(R.id.recyculerleaders);
         leaderBoards = new ArrayList<>();
+       globalLeaderBtn = view.findViewById(R.id.Globalleader);
+       friendLeaderBtn = view.findViewById(R.id.friendleader);
         userid=FirebaseAuth.getInstance().getUid();
         leaderBoards.add(new LeaderBoard("Parmugilan S","2500", userid,4));
         leaderBoards.add(new LeaderBoard("Shyam S","2600",userid,5));
@@ -52,6 +57,27 @@ public class LeaderFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adaptor=new LeadersAdaptor(leaderBoards);
         recyclerView.setAdapter(adaptor);
+        globalLeaderBtn.setBackgroundResource(R.drawable.blue_bg);
+        globalLeaderBtn.setTextColor(getResources().getColor(R.color.white));
+        friendLeaderBtn.setBackgroundResource(R.drawable.gray_bg);
+        friendLeaderBtn.setTextColor(getResources().getColor(R.color.black));
+        globalLeaderBtn.setOnClickListener(v -> {
+            globalLeaderBtn.setBackgroundResource(R.drawable.blue_bg);
+            globalLeaderBtn.setTextColor(getResources().getColor(R.color.white));
+            friendLeaderBtn.setBackgroundResource(R.drawable.gray_bg);
+            friendLeaderBtn.setTextColor(getResources().getColor(R.color.black));
+
+        });
+
+        friendLeaderBtn.setOnClickListener(v -> {
+            friendLeaderBtn.setBackgroundResource(R.drawable.blue_bg);
+            friendLeaderBtn.setTextColor(getResources().getColor(R.color.white));
+            globalLeaderBtn.setBackgroundResource(R.drawable.gray_bg);
+            globalLeaderBtn.setTextColor(getResources().getColor(R.color.black));
+
+
+
+        });
         return view;
     }
 }
