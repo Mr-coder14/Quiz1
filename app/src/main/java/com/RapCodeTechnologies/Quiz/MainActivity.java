@@ -1,6 +1,7 @@
 package com.RapCodeTechnologies.Quiz;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import Fragments.BookMarkFragment;
 import Fragments.HomeFragment;
@@ -26,6 +28,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragment= new HomeFragment();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+
+                    String token = task.getResult();
+                    
+                    Log.d("FCM", "Token: " + token);
+                });
         bottomNavigationView=findViewById(R.id.bottomappbar);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
 

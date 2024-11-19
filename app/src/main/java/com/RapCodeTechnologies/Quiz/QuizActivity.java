@@ -102,7 +102,7 @@ public class QuizActivity extends AppCompatActivity {
             );
 
             fragment.setOnImageLoadListener(() -> {
-                // Set up the question and start the timer
+
                 fragment.setOnCorrectAnswerListener(() -> score++);
                 quizprogress.setProgress((currentQuestionIndex - 1) * 100 / questionList.size());
                 startTimer();
@@ -114,7 +114,7 @@ public class QuizActivity extends AppCompatActivity {
 
             currentQuestionIndex++;
         } else {
-            // All questions have been answered, directly show the result
+
             showResultFragment();
         }
     }
@@ -127,13 +127,13 @@ public class QuizActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(QUESTION_TIME, TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                // Update the timer text
+
                 timer.setText(String.valueOf(millisUntilFinished / 1000  + "s"));
             }
 
             @Override
             public void onFinish() {
-                // Time is up, load the next question
+
                 loadNextQuestion();
             }
         };
@@ -142,7 +142,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showResultFragment() {
-        // Hide all UI components related to the quiz question
+
         findViewById(R.id.timer).setVisibility(View.GONE);
         progressBar1.setVisibility(View.GONE);
         findViewById(R.id.progressquiz).setVisibility(View.GONE);
@@ -152,7 +152,7 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.questioncount).setVisibility(View.GONE);
         findViewById(R.id.backquiz).setVisibility(View.GONE);
 
-        // Immediately load the ResultFragment
+
         ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size(), userid);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainerquiz, resultFragment);

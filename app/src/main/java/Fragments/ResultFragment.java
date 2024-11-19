@@ -68,8 +68,8 @@ public class ResultFragment extends Fragment {
         animationView = view.findViewById(R.id.lottieanimationcoin);
         addingcoin=view.findViewById(R.id.addingcoin);
         ConstraintLayout.LayoutParams progressBarLayoutParams = (ConstraintLayout.LayoutParams) loadingProgressBar.getLayoutParams();
-        progressBarLayoutParams.horizontalBias = 0.5f;  // Center horizontally
-        progressBarLayoutParams.verticalBias = 0.5f;    // Center vertically
+        progressBarLayoutParams.horizontalBias = 0.5f;
+        progressBarLayoutParams.verticalBias = 0.5f;
         loadingProgressBar.setLayoutParams(progressBarLayoutParams);
 
         animationViewSpattered = view.findViewById(R.id.lottieanimationcoinspattered);
@@ -81,7 +81,7 @@ public class ResultFragment extends Fragment {
         animationView.setAnimation(R.raw.coinanimation);
 
 
-        // Set both animations to loop continuously
+
         animationViewSpattered.setRepeatCount(-1);
         animationView.setRepeatCount(-1);
 
@@ -127,10 +127,10 @@ public class ResultFragment extends Fragment {
         return view;
     }
     private void restartQuiz() {
-        // Navigate back to the QuizActivity (if you're in a Fragment)
-        Intent intent = new Intent(getActivity(), QuizActivity.class); // Replace QuizActivity with your actual quiz activity
+
+        Intent intent = new Intent(getActivity(), QuizActivity.class);
         startActivity(intent);
-        getActivity().finish(); // This will finish the current activity, returning to the QuizActivity
+        getActivity().finish();
     }
 
     private int calculateCoins(double percentage) {
@@ -223,7 +223,7 @@ public class ResultFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        resetCoinsAddedFlag(); // Handle app closure or navigation away
+        resetCoinsAddedFlag();
     }
     private void resetCoinsAddedFlag() {
         if (userId != null) {

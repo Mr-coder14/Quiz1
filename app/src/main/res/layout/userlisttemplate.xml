@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="1dp"
+    android:elevation="2dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/person3"
+        android:tint="@color/white"
+        android:id="@+id/profilepicuserlist"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/profilepicuserlist"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="18sp"
+            android:layout_marginLeft="7dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:id="@+id/user_profile_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+000000000000"
+            android:layout_marginLeft="7dp"
+            android:textColor="@color/black"
+            android:id="@+id/user_phone_number"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:id="@+id/countmessagebg"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@drawable/send_circlebg"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/messagecount"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:textColor="@color/white"
+
+            />
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
