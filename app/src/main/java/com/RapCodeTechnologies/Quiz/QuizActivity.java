@@ -49,8 +49,9 @@ public class QuizActivity extends AppCompatActivity {
         progressBar1=findViewById(R.id.progressbaroverall);
         imageButton=findViewById(R.id.backquiz);
         quizDatabase = FirebaseDatabase.getInstance().getReference("quiz_questions");
-        loadQuestionsFromFirebase();
         progressBar1.setVisibility(View.VISIBLE);
+        loadQuestionsFromFirebase();
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +69,7 @@ public class QuizActivity extends AppCompatActivity {
                     questionList.add(question);
                 }
                 if (!questionList.isEmpty()) {
+                    progressBar1.setVisibility(View.GONE);
                     loadNextQuestion();
                 }
             }
@@ -105,6 +107,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 fragment.setOnCorrectAnswerListener(() -> score++);
                 quizprogress.setProgress((currentQuestionIndex - 1) * 100 / questionList.size());
+                questionCount.setText(String.valueOf(currentQuestionIndex)+"/"+String.valueOf(questionList.size()));
                 startTimer();
             });
 

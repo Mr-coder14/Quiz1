@@ -79,6 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createuser(String emaill, String pass, String name, String phno) {
+        // Show the progress dialog
+        progressDialog.setMessage("Registering...");
+        progressDialog.setCancelable(false); // Make it non-cancelable
+        progressDialog.show();
+
         auth.createUserWithEmailAndPassword(emaill, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -86,12 +91,13 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     if (user != null) {
                         String userId = user.getUid();
-                        User newUser = new User(name, emaill, phno,userId,0);
+                        User newUser = new User(name, emaill, phno, userId, 0);
                         databaseReference.child(userId).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                progressDialog.dismiss(); // Dismiss the dialog when done
                                 if (task.isSuccessful()) {
-                                    progressDialog.dismiss();
+                                    Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                     finish();
                                 } else {
@@ -100,12 +106,12 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    progressDialog.dismiss(); // Dismiss the dialog on failure
                     Toast.makeText(RegisterActivity.this, "Failed to create an account. Try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-    }
+
+}

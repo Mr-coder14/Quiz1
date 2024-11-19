@@ -1,10 +1,11 @@
 package Models;
 
 public class LeaderBoard {
-    private String username,coin,userid;
-    private int no;
+    private String username,userid;
 
-    public LeaderBoard(String username, String coin, String userid, int no) {
+    private int no,coin;
+
+    public LeaderBoard(String username,String userid, int coin,  int no) {
         this.username = username;
         this.coin = coin;
         this.userid = userid;
@@ -20,11 +21,11 @@ public class LeaderBoard {
         this.username = username;
     }
 
-    public String getCoin() {
+    public int getCoin() {
         return coin;
     }
 
-    public void setCoin(String coin) {
+    public void setCoin(int coin) {
         this.coin = coin;
     }
 

@@ -60,7 +60,7 @@ public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewhold
         public void bind(LeaderBoard leaderBoard) {
             username.setText(leaderBoard.getUsername());
             no.setText(String.valueOf(leaderBoard.getNo()));
-            coin.setText(leaderBoard.getCoin());
+            coin.setText(String.valueOf(leaderBoard.getCoin()));
         }
     }
 }

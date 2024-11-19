@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.RapCodeTechnologies.Quiz.LoginActivity;
@@ -29,19 +29,25 @@ public class ProfileFragment extends Fragment {
     private TextView email,username;
     private DatabaseReference database;
     private String userid;
-    private LinearLayout lgout;
+    private LinearLayout lgout,lo;
     private FirebaseAuth auth;
+    private ProgressBar progressBar;
+
     private User user;
     private FirebaseUser us;
 
     public ProfileFragment() {
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_profile,container,false);
         email=view.findViewById(R.id.emailtxt);
         username=view.findViewById(R.id.usernametxt);
+        progressBar = view.findViewById(R.id.progressBarprofile);
+        lo=view.findViewById(R.id.lo);
+        lo.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
         lgout=view.findViewById(R.id.lodoutbtn);
         auth=FirebaseAuth.getInstance();
         us=auth.getCurrentUser();
@@ -90,9 +96,13 @@ public class ProfileFragment extends Fragment {
                         username.setText(user.getName());
                     }
                 }
+                progressBar.setVisibility(View.GONE);
+                lo.setVisibility(View.VISIBLE);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
+                lo.setVisibility(View.VISIBLE);
             }
         });
     }
