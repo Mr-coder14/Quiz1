@@ -103,11 +103,10 @@ public class ChatlistAdaptor extends RecyclerView.Adapter<ChatlistAdaptor.ViewHo
             name= itemView.findViewById(R.id.user_profile_name);
             l=itemView.findViewById(R.id.countmessagebg);
             messagecount=itemView.findViewById(R.id.messagecount);
-            phno=itemView.findViewById(R.id.user_phone_number);
+
         }
         public void bind(User userModel){
             name.setText(userModel.getName());
-            phno.setText(userModel.getPhno());
             if(String.valueOf(userModel.getMessagecount())!=null && userModel.getMessagecount()!=0){
                 l.setVisibility(View.VISIBLE);
                 messagecount.setText(String.valueOf(userModel.getMessagecount()));

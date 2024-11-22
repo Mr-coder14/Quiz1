@@ -1,5 +1,7 @@
 package Adaptors;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.RapCodeTechnologies.Quiz.ProfileActivity;
 import com.RapCodeTechnologies.Quiz.R;
 
 import java.util.ArrayList;
@@ -17,12 +20,14 @@ import Models.LeaderBoard;
 
 public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewholder> {
     private ArrayList<LeaderBoard> leaderBoards;
+    private Context context;
     public LeadersAdaptor(ArrayList<LeaderBoard> leaderBoards){
         this.leaderBoards=leaderBoards;
     }
     @NonNull
     @Override
     public LeadersAdaptor.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context=parent.getContext();
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.leader_item,parent,false);
         return new LeadersAdaptor.viewholder(view);
     }
@@ -35,6 +40,9 @@ public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewhold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent(context, ProfileActivity.class);
+                intent.putExtra("userid",leaderBoard.getUserid());
+                context.startActivity(intent);
 
             }
         });

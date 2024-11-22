@@ -61,11 +61,10 @@ public class searchadaptor extends RecyclerView.Adapter<searchadaptor.viewholer>
         public viewholer(@NonNull View itemView) {
             super(itemView);
             name= itemView.findViewById(R.id.user_profile_name);
-            phno=itemView.findViewById(R.id.user_phone_number);
         }
         public void bind(User userModel){
             name.setText(userModel.getName());
-            phno.setText(userModel.getPhno());
+
         }
     }
 }

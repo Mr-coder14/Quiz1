@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.RapCodeTechnologies.Quiz.LoginActivity;
@@ -26,12 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 import Models.User;
 
 public class ProfileFragment extends Fragment {
-    private TextView email,username;
+    private TextView username,coins,rank,followers;
     private DatabaseReference database;
     private String userid;
-    private LinearLayout lgout,lo;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+    private ScrollView lo;
+
 
     private User user;
     private FirebaseUser us;
@@ -41,22 +43,17 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_profile,container,false);
-        email=view.findViewById(R.id.emailtxt);
+
         username=view.findViewById(R.id.usernametxt);
         progressBar = view.findViewById(R.id.progressBarprofile);
         lo=view.findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-
-        lgout=view.findViewById(R.id.lodoutbtn);
+        coins=view.findViewById(R.id.pointsprofile);
+        rank=view.findViewById(R.id.rankprofile);
+        followers=view.findViewById(R.id.Followersprofile);
         auth=FirebaseAuth.getInstance();
         us=auth.getCurrentUser();
-        lgout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dailogbox();
-            }
-        });
         userid= FirebaseAuth.getInstance().getUid();
         database=FirebaseDatabase.getInstance().getReference().child("users").child(userid);
         userinformation();
@@ -92,8 +89,10 @@ public class ProfileFragment extends Fragment {
                 if (snapshot.exists()) {
                     user = snapshot.getValue(User.class);
                     if (user != null) {
-                        email.setText(user.getEmail());
+                        coins.setText(String.valueOf(user.getCoin()));
                         username.setText(user.getName());
+                        rank.setText("#1");
+                        followers.setText("100");
                     }
                 }
                 progressBar.setVisibility(View.GONE);

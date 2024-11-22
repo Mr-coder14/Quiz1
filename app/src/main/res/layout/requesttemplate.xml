@@ -6,12 +6,14 @@
     android:layout_marginTop="12dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
+    android:gravity="center"
     android:layout_marginBottom="1dp"
     android:elevation="2dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/person3"
         android:tint="@color/white"
         android:id="@+id/profilepicuserlist"/>
@@ -28,6 +30,7 @@
             android:layout_height="wrap_content"
             android:text="User Name"
             android:textSize="18sp"
+            android:fontFamily="@font/lato"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="7dp"
             android:textStyle="bold"
@@ -40,26 +43,37 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_alignParentEnd="true"
-        android:visibility="gone"
         android:id="@+id/countmessagebg"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:orientation="horizontal"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:background="@drawable/send_circlebg"
+
         >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/messagecount"
-            android:text=""
-            android:textStyle="bold"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_bg"
+            android:id="@+id/deleterequest"
+            android:text="Delete"
+            android:textColor="@color/black"
+            android:layout_marginRight="15dp"
             android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:textColor="@color/white"
-
+            android:textStyle="bold"
+            android:textSize="13sp"
             />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_bg"
+            android:id="@+id/confirmrequest"
+            android:text="Confirm"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            />
     </LinearLayout>
 
 
