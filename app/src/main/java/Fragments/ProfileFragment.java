@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.RapCodeTechnologies.Quiz.EditActivity;
 import com.RapCodeTechnologies.Quiz.LoginActivity;
 import com.RapCodeTechnologies.Quiz.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Models.User;
 
 public class ProfileFragment extends Fragment {
@@ -33,6 +37,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private ScrollView lo;
+    private LinearLayout edit;
 
 
     private User user;
@@ -53,10 +58,18 @@ public class ProfileFragment extends Fragment {
         rank=view.findViewById(R.id.rankprofile);
         followers=view.findViewById(R.id.Followersprofile);
         auth=FirebaseAuth.getInstance();
+        edit=view.findViewById(R.id.editIcon);
         us=auth.getCurrentUser();
         userid= FirebaseAuth.getInstance().getUid();
         database=FirebaseDatabase.getInstance().getReference().child("users").child(userid);
         userinformation();
+        fetchFollowersCount();
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), EditActivity.class));
+            }
+        });
         return view;
     }
     private void dailogbox() {
@@ -82,22 +95,79 @@ public class ProfileFragment extends Fragment {
         });
         builder.show();
     }
+    private void fetchFollowersCount() {
+        DatabaseReference followersRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("followers")
+                .child(userid); // `userid` is the current user's ID
+
+        followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if followers exist under the current user
+                if (snapshot.exists()) {
+                    long count = snapshot.getChildrenCount(); // Get the count of child nodes
+                    followers.setText(String.valueOf(count) ); // Update the TextView
+                } else {
+                    followers.setText("0"); // If no followers, set to 0
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                followers.setText("0"); // Set to 0 in case of an error
+            }
+        });
+    }
+
     private void userinformation() {
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    user = snapshot.getValue(User.class);
-                    if (user != null) {
-                        coins.setText(String.valueOf(user.getCoin()));
-                        username.setText(user.getName());
-                        rank.setText("#1");
-                        followers.setText("100");
+                    List<User> userList = new ArrayList<>();
+
+                    // Collect all users into a list
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        User fetchedUser = userSnapshot.getValue(User.class);
+                        if (fetchedUser != null) {
+                            userList.add(fetchedUser);
+                        }
+                    }
+
+                    // Sort the list by coins in descending order
+                    userList.sort((u1, u2) -> Integer.compare(u2.getCoin(), u1.getCoin()));
+
+                    int currentRank = 1;
+                    boolean userRankFound = false;
+
+                    // Find the rank of the current user
+                    for (User u : userList) {
+                        if (u.getUserid().equals(userid)) {
+                            user = u;
+                            coins.setText(String.valueOf(user.getCoin()));
+                            username.setText(user.getName());
+                            rank.setText("#" + currentRank); // Set the rank dynamically
+                            userRankFound = true;
+                            break;
+                        }
+                        currentRank++;
+                    }
+
+                    // If user rank is not found, display a default message
+                    if (!userRankFound) {
+                        rank.setText("N/A");
+                        coins.setText("0");
+                        username.setText("Unknown");
                     }
                 }
+
                 progressBar.setVisibility(View.GONE);
                 lo.setVisibility(View.VISIBLE);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressBar.setVisibility(View.GONE);
@@ -105,4 +175,5 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
 }

@@ -44,6 +44,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.airbnb.android:lottie:5.2.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.github.bumptech.glide:glide:4.15.1'

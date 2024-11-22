@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/PrimaryColor">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="@color/white"
+            android:id="@+id/backpr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Details"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/lato"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <!-- Profile Image Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="137dp"
+                android:layout_height="137dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/person3"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/gray"
+                app:strokeWidth="3dp"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:gravity="center"
+                android:layout_height="30dp"
+                android:layout_alignEnd="@id/profileImage"
+                android:id="@+id/editIcon"
+                android:layout_alignBottom="@id/profileImage"
+                android:background="@drawable/gray_circle"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/edit"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    app:shapeAppearanceOverlay="@style/CircleImage" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/black"/>
+
+
+        <!-- Username Field (Outlined Box) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="true"
+            app:hintAnimationEnabled="true"
+            app:boxStrokeColor="@color/gray"
+            app:boxBackgroundColor="@android:color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:fontFamily="@font/plus"
+                android:maxLines="1"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Bio Field (Outlined Box, Multiple Lines) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bio"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/black"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="true"
+            app:helperTextEnabled="true"
+            app:hintAnimationEnabled="true"
+            app:boxStrokeColor="@color/gray"
+            app:boxBackgroundColor="@android:color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bioInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus"
+                android:hint="Bio (Eg: Coder, Dancer...)"
+                android:maxLines="5"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:id="@+id/deiscardbutton"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/mesagebg"
+            android:backgroundTint="#E0E0E0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discard Changes"
+                android:fontFamily="@font/lato"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:id="@+id/SaveButton"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:background="@drawable/message_bgblue"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:id="@+id/erex"
+                android:fontFamily="@font/lato"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

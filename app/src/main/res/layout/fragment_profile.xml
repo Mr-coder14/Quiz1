@@ -142,12 +142,6 @@
                         android:textStyle="bold"
                         android:fontFamily="@font/lato"
                          />
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/edit"
-                        android:layout_marginLeft="5dp"
-                        />
 
                 </LinearLayout>
                 <TextView
