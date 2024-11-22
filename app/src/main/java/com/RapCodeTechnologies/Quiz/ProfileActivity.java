@@ -28,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import Models.User;
@@ -80,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         updateImageViewBasedOnText();
         userinformation();
         currentuserinfo();
+        fetchFollowersCount();
         backpr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +159,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,12 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
-
-
     }
     private void updateImageViewBasedOnText() {
         String text = txt.getText().toString();
@@ -188,10 +180,34 @@ public class ProfileActivity extends AppCompatActivity {
             imageView.setVisibility(View.GONE);
         }
     }
+    private void fetchFollowersCount() {
+        DatabaseReference followersRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("followers")
+                .child(userid);
+
+        followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()) {
+                    long count = snapshot.getChildrenCount();
+                    followers.setText(String.valueOf(count) );
+                } else {
+                    followers.setText("0");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                followers.setText("0");
+            }
+        });
+    }
 
 
     private void checkRequestStatus() {
-        // Track the current state to prevent conflicting updates
+
         DatabaseReference combinedStatusRef = FirebaseDatabase.getInstance().getReference();
 
         combinedStatusRef.addValueEventListener(new ValueEventListener() {
@@ -218,10 +234,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
     private void currentuserinfo() {
         database= FirebaseDatabase.getInstance().getReference().child("users").child(userid_current);
         database.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -231,10 +243,8 @@ public class ProfileActivity extends AppCompatActivity {
                     currentuser=snapshot.getValue(User.class);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
@@ -247,7 +257,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     List<User> userList = new ArrayList<>();
 
-                    // Collect all users
+
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         User fetchedUser = userSnapshot.getValue(User.class);
                         if (fetchedUser != null) {
@@ -255,47 +265,36 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
 
-                    // Sort users by coin in descending order
-                    Collections.sort(userList, new Comparator<User>() {
-                        @Override
-                        public int compare(User u1, User u2) {
-                            return Integer.compare(u2.getCoin(), u1.getCoin());
-                        }
-                    });
 
-                    int currentRank = 1;
+                    userList.sort((u1, u2) -> Integer.compare(u2.getCoin(), u1.getCoin()));
+
+                    int currentRank = 1; // Start rank from 1
                     boolean viewedUserRankFound = false;
-                    boolean currentUserRankFound = false;
 
-                    // Assign ranks based on sorted list
                     for (User u : userList) {
-                        // Check for the user being viewed
-                        if (!viewedUserRankFound && u.getUserid().equals(userid)) {
+                        if (u.getUserid().equals(userid)) { // Check if this is the user being viewed
                             user = u;
-                            coins.setText(String.valueOf(user.getCoin()));
                             username.setText(user.getName());
-                            followers.setText("100"); // Static value
-                            rank.setText("#" + currentRank); // Set rank for the viewed user
+                            coins.setText(String.valueOf(user.getCoin()));
+                            rank.setText("#" + currentRank);
                             viewedUserRankFound = true;
+                            break;
                         }
-
-                        // Check for the current logged-in user's rank
-                        if (!currentUserRankFound && u.getUserid().equals(userid_current)) {
-                            rank.setText("#" + currentRank); // Set rank for the current user
-                            currentUserRankFound = true;
-                        }
-
                         currentRank++;
                     }
 
-                    // If the viewed user is not found, show a message
                     if (!viewedUserRankFound) {
-                        Toast.makeText(ProfileActivity.this, "Viewed user not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "User rank not found", Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                progressBar.setVisibility(View.GONE);
-                lo.setVisibility(View.VISIBLE);
+                    // Update the UI
+                    progressBar.setVisibility(View.GONE);
+                    lo.setVisibility(View.VISIBLE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    lo.setVisibility(View.VISIBLE);
+                    Toast.makeText(ProfileActivity.this, "No users found", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -306,8 +305,4 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }

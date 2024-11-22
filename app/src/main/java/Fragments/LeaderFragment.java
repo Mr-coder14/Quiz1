@@ -1,5 +1,6 @@
 package Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.RapCodeTechnologies.Quiz.ProfileActivity;
 import com.RapCodeTechnologies.Quiz.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,7 @@ import Models.LeaderBoard;
 
 public class LeaderFragment extends Fragment {
     private ArrayList<LeaderBoard> leaderBoards;
+    private ArrayList<LeaderBoard> allUsers;
     private RecyclerView recyclerView;
     private LeadersAdaptor adaptor;
     private TextView firstplacename,secondplacename,thirdplacename,firplacecoin,secondplaecoin,thirdplacecoin;
@@ -42,7 +45,7 @@ public class LeaderFragment extends Fragment {
     private AppCompatButton globalLeaderBtn;
     private AppCompatButton friendLeaderBtn;
     private ProgressBar progressBar;
-    private LinearLayout layout;
+    private LinearLayout layout,firstplace,seocndplace,thirdplace;
     private DatabaseReference databaseReference;
 
     public LeaderFragment() {
@@ -61,6 +64,9 @@ public class LeaderFragment extends Fragment {
         thirdplacename=view.findViewById(R.id.thirdpalceusername);
         thirdplacecoin=view.findViewById(R.id.thirdrdplacecoin);
         progressBar = view.findViewById(R.id.progressBarleader);
+        firstplace=view.findViewById(R.id.firstplace);
+        seocndplace=view.findViewById(R.id.secondplace);
+        thirdplace=view.findViewById(R.id.thirdplace);
          layout=view.findViewById(R.id.layoutleaders);
         secondplaecoin=view.findViewById(R.id.secondplacecoin);
         firplacecoin=view.findViewById(R.id.firstplacecoin);
@@ -82,6 +88,36 @@ public class LeaderFragment extends Fragment {
         globalLeaderBtn.setTextColor(getResources().getColor(R.color.white));
         friendLeaderBtn.setBackgroundResource(R.drawable.gray_bg);
         friendLeaderBtn.setTextColor(getResources().getColor(R.color.black));
+        firstplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra("userid", allUsers.get(0).getUserid());
+                startActivity(intent);
+            }
+        });
+        seocndplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (allUsers.size() > 1) {
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    intent.putExtra("userid", allUsers.get(1).getUserid()
+
+                    );
+                    startActivity(intent);
+                }
+            }
+        });
+        thirdplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (allUsers.size() > 2) {
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    intent.putExtra("userid", allUsers.get(2).getUserid());
+                    startActivity(intent);
+                }
+            }
+        });
         globalLeaderBtn.setOnClickListener(v -> {
             globalLeaderBtn.setBackgroundResource(R.drawable.blue_bg);
             globalLeaderBtn.setTextColor(getResources().getColor(R.color.white));
@@ -102,6 +138,7 @@ public class LeaderFragment extends Fragment {
         return view;
     }
 
+
     private void fetchcoins() {
         progressBar.setVisibility(View.VISIBLE); // Show ProgressBar before fetching data
 
@@ -111,16 +148,16 @@ public class LeaderFragment extends Fragment {
                 if (snapshot.exists()) {
                     leaderBoards.clear();
 
-                    ArrayList<LeaderBoard> allUsers = new ArrayList<>();
+                     allUsers = new ArrayList<>();
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         String name = userSnapshot.child("name").getValue(String.class);
                         String userId = userSnapshot.child("userid").getValue(String.class);
                         int coin = userSnapshot.child("coin").getValue(Integer.class);
 
-                        allUsers.add(new LeaderBoard(name, userId, coin, 0)); // Initial rank is 0
+                        allUsers.add(new LeaderBoard(name, userId, coin, 0));
                     }
 
-                    // Sort and populate UI
+
                     allUsers.sort((user1, user2) -> Integer.compare(user2.getCoin(), user1.getCoin()));
 
                     if (allUsers.size() > 0) {
