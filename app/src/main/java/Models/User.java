@@ -6,6 +6,7 @@ public class User implements Parcelable {
     private String email;
     private String userid;
     private String phno;
+    private String bio;
     private int coin;
     private int messagecount;
     public int getMessagecount() {
@@ -38,6 +39,13 @@ public class User implements Parcelable {
         this.userid = userid;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public String getName() {
         return name;
@@ -79,6 +87,7 @@ public class User implements Parcelable {
     protected User(Parcel in) {
         name = in.readString();
         email = in.readString();
+        bio=in.readString();
         coin=in.readInt();
         userid = in.readString();
         phno = in.readString();
@@ -107,6 +116,7 @@ public class User implements Parcelable {
         dest.writeString(email);
         dest.writeInt(coin);
         dest.writeString(userid);
+        dest.writeString(bio);
         dest.writeString(phno);
     }
 }

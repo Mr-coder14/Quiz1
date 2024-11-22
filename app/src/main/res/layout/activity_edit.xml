@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:padding="10dp"
         android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:background="@color/PrimaryColor">
 
         <ImageView
@@ -21,6 +21,7 @@
             android:layout_height="35dp"
             android:src="@drawable/baseline_arrow_back_24"
             app:tint="@color/white"
+            android:layout_gravity="center_vertical"
             android:id="@+id/backpr" />
 
         <TextView
@@ -111,6 +112,13 @@
                 android:maxLines="1"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name is already exist"
+            android:textColor="#F40707"
+            android:layout_marginTop="4dp"
+            android:id="@+id/hintmessage"/>
 
         <!-- Bio Field (Outlined Box, Multiple Lines) -->
         <TextView

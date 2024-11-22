@@ -31,7 +31,7 @@ import java.util.List;
 import Models.User;
 
 public class ProfileFragment extends Fragment {
-    private TextView username,coins,rank,followers;
+    private TextView username,coins,rank,followers,bio;
     private DatabaseReference database;
     private String userid;
     private FirebaseAuth auth;
@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBarprofile);
         lo=view.findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
+        bio=view.findViewById(R.id.userBio);
         progressBar.setVisibility(View.VISIBLE);
         coins=view.findViewById(R.id.pointsprofile);
         rank=view.findViewById(R.id.rankprofile);
@@ -99,23 +100,23 @@ public class ProfileFragment extends Fragment {
         DatabaseReference followersRef = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("followers")
-                .child(userid); // `userid` is the current user's ID
+                .child(userid);
 
         followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Check if followers exist under the current user
+
                 if (snapshot.exists()) {
-                    long count = snapshot.getChildrenCount(); // Get the count of child nodes
-                    followers.setText(String.valueOf(count) ); // Update the TextView
+                    long count = snapshot.getChildrenCount();
+                    followers.setText(String.valueOf(count) );
                 } else {
-                    followers.setText("0"); // If no followers, set to 0
+                    followers.setText("0");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                followers.setText("0"); // Set to 0 in case of an error
+                followers.setText("0");
             }
         });
     }
@@ -149,6 +150,7 @@ public class ProfileFragment extends Fragment {
                             user = u;
                             coins.setText(String.valueOf(user.getCoin()));
                             username.setText(user.getName());
+                            bio.setText(user.getBio());
                             rank.setText("#" + currentRank); // Set the rank dynamically
                             userRankFound = true;
                             break;
