@@ -2,8 +2,12 @@ package com.RapCodeTechnologies.Quiz;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,14 +32,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import Adaptors.ImageGridAdapter;
+
 public class EditActivity extends AppCompatActivity {
-    private ImageView imageView;
+    private ImageView imageView,edit;
     private ImageView back;
     private EditText username,bio;
     private LinearLayout discard,confirm;
     private ProgressBar progressBar;
     private String userid;
     private DatabaseReference databaseReference;
+    private int[] imageResources = {
+            R.drawable.person3,
+            R.drawable.profile,
+            R.drawable.edit,
+            R.drawable.edit
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +57,15 @@ public class EditActivity extends AppCompatActivity {
         confirm=findViewById(R.id.SaveButton);
         back=findViewById(R.id.backpr);
         username=findViewById(R.id.usernameInput);
+        imageView=findViewById(R.id.profileImageu);
+        edit=findViewById(R.id.chamgepic);
         progressBar=findViewById(R.id.progressBaredit);
 
         bio=findViewById(R.id.bioInput);
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
         findViewById(R.id.hintmessage).setVisibility(View.GONE);
-
+        edit.setOnClickListener(view -> showImageSelectionDialog());
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +81,28 @@ public class EditActivity extends AppCompatActivity {
         });
 
     }
+    private void showImageSelectionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_image_selection, null);
+
+        GridView gridView = dialogView.findViewById(R.id.imageGridView);
+        ImageGridAdapter adapter = new ImageGridAdapter(this, imageResources); // Use ImageGridAdapter
+        gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            imageView.setImageResource(imageResources[position]);
+            Toast.makeText(EditActivity.this, "Image Selected", Toast.LENGTH_SHORT).show();
+        });
+
+        builder.setView(dialogView);
+        builder.setCancelable(true);
+        builder.setTitle("Select Profile Image");
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void validateAndSaveUsername() {
         progressBar.setVisibility(View.VISIBLE);
         String enteredUsername = username.getText().toString().trim();
@@ -102,7 +139,7 @@ public class EditActivity extends AppCompatActivity {
 
                 if (isUsernameUnique) {
                     findViewById(R.id.hintmessage).setVisibility(View.GONE);
-                    // Save the new username to Firebase
+
                     databaseReference.child(userid).child("name").setValue(enteredUsername)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
