@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ScrollView lo;
     private LinearLayout message,connect;
-    private ImageView imageView,backpr;
+    private ImageView imageView,backpr,more;
     private User user,currentuser;
     private boolean isRequestSent = false;
     private DatabaseReference followersRef;
@@ -58,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         lo=findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
         connect=findViewById(R.id.connectButton);
+        more=findViewById(R.id.more);
         backpr=findViewById(R.id.backpr);
         imageView=findViewById(R.id.fees);
         progressBar.setVisibility(View.VISIBLE);
@@ -65,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         coins=findViewById(R.id.pointsprofile);
         rank=findViewById(R.id.rankprofile);
         followers=findViewById(R.id.Followersprofile);
+        bio=findViewById(R.id.userBio);
         auth=FirebaseAuth.getInstance();
         us=auth.getCurrentUser();
         message=findViewById(R.id.messageButton);
@@ -158,16 +161,96 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(view);
+            }
+        });
 
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ProfileActivity.this,ChatActivity.class);
                 intent.putExtra("usermodel",user);
+                intent.putExtra("userid",user.getUserid());
                 startActivity(intent);
             }
         });
     }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.profile_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+                int id=item.getItemId();
+               if(id==R.id.action_block){
+                   showBlockConfirmationDialog();
+                   return true;
+                }
+
+
+                if(id==R.id.action_report){
+                handleReportUser();
+                return true;
+            }
+                if(id== R.id.action_message){
+                    Intent messageIntent = new Intent(ProfileActivity.this, ChatActivity.class);
+                    messageIntent.putExtra("usermodel", user);
+                    messageIntent.putExtra("userid",user.getUserid());
+                    startActivity(messageIntent);
+                    return true;}
+
+                if(id== R.id.action_share) {
+                    shareProfile();
+                    return true;
+                }
+            return false;
+        });
+
+        popupMenu.show();
+    }
+    private void showBlockConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Block User")
+                .setMessage("Are you sure you want to block this user?")
+                .setPositiveButton("Yes", (dialog, which) -> blockUser())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void blockUser() {
+        DatabaseReference blockListRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("blocked_users")
+                .child(userid_current)
+                .child(userid);
+
+        blockListRef.setValue(true).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ProfileActivity.this, "User blocked successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ProfileActivity.this, "Failed to block user", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void handleReportUser() {
+        // Example: Open a new activity for reporting the user
+//        Intent intent = new Intent(ProfileActivity.this, ReportActivity.class);
+//        intent.putExtra("userid", userid); // Pass the reported user's ID
+//        startActivity(intent);
+    }
+
+    private void shareProfile() {
+        String shareMessage = "Check out this profile on QuizApp: " + user.getName();
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(Intent.createChooser(shareIntent, "Share Profile Using"));
+    }
+
     private void updateImageViewBasedOnText() {
         String text = txt.getText().toString();
         if (text.equals("Connect")) {
@@ -268,15 +351,16 @@ public class ProfileActivity extends AppCompatActivity {
 
                     userList.sort((u1, u2) -> Integer.compare(u2.getCoin(), u1.getCoin()));
 
-                    int currentRank = 1; // Start rank from 1
+                    int currentRank = 1;
                     boolean viewedUserRankFound = false;
 
                     for (User u : userList) {
-                        if (u.getUserid().equals(userid)) { // Check if this is the user being viewed
+                        if (u.getUserid().equals(userid)) {
                             user = u;
                             username.setText(user.getName());
                             coins.setText(String.valueOf(user.getCoin()));
                             rank.setText("#" + currentRank);
+                            bio.setText(user.getBio()==null || user.getBio()==""? "N/A":user.getBio());
                             viewedUserRankFound = true;
                             break;
                         }
@@ -287,7 +371,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Toast.makeText(ProfileActivity.this, "User rank not found", Toast.LENGTH_SHORT).show();
                     }
 
-                    // Update the UI
+
                     progressBar.setVisibility(View.GONE);
                     lo.setVisibility(View.VISIBLE);
                 } else {

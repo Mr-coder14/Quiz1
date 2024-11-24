@@ -3,10 +3,16 @@ package com.RapCodeTechnologies.Quiz;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,14 +25,16 @@ import Fragments.BookMarkFragment;
 import Fragments.HomeFragment;
 import Fragments.LeaderFragment;
 import Fragments.ProfileFragment;
-public class MainActivity extends AppCompatActivity {
+
+public class UserMainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
     private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_main);
         fragment= new HomeFragment();
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
@@ -37,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     String token = task.getResult();
-                    
+
                     Log.d("FCM", "Token: " + token);
                 });
         bottomNavigationView=findViewById(R.id.bottomappbar);
@@ -74,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
         deleteCoinsAddedForQuiz();
 
-        }
+    }
     private void deleteCoinsAddedForQuiz() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,4 +114,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    }
+
+}

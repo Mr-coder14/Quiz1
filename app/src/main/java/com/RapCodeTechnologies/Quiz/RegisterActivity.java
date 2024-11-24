@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 progressDialog.dismiss(); // Dismiss the dialog when done
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                    startActivity(new Intent(RegisterActivity.this, UserMainActivity.class));
                                     finish();
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show();

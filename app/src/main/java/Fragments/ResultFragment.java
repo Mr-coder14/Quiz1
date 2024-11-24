@@ -15,9 +15,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.RapCodeTechnologies.Quiz.MainActivity;
 import com.RapCodeTechnologies.Quiz.QuizActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.RapCodeTechnologies.Quiz.UserMainActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -210,7 +210,7 @@ public class ResultFragment extends Fragment {
     }
     private void navigateToMainActivity() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
+            Intent intent = new Intent(getActivity(), UserMainActivity.class);
             startActivity(intent);
             getActivity().finish();
         }

@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class EditActivity extends AppCompatActivity {
     private ImageView back;
     private EditText username,bio;
     private LinearLayout discard,confirm;
+    private ProgressBar progressBar;
     private String userid;
     private DatabaseReference databaseReference;
 
@@ -42,6 +44,8 @@ public class EditActivity extends AppCompatActivity {
         confirm=findViewById(R.id.SaveButton);
         back=findViewById(R.id.backpr);
         username=findViewById(R.id.usernameInput);
+        progressBar=findViewById(R.id.progressBaredit);
+
         bio=findViewById(R.id.bioInput);
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
@@ -63,14 +67,17 @@ public class EditActivity extends AppCompatActivity {
 
     }
     private void validateAndSaveUsername() {
+        progressBar.setVisibility(View.VISIBLE);
         String enteredUsername = username.getText().toString().trim();
         String bioe=bio.getText().toString();
 
         if (TextUtils.isEmpty(enteredUsername)) {
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(EditActivity.this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(bioe)) {
+            progressBar.setVisibility(View.GONE);
             bio.setError("Bio cannot be Empty");
             Toast.makeText(EditActivity.this, "Bio cannot be empty", Toast.LENGTH_SHORT).show();
             return;
@@ -103,23 +110,28 @@ public class EditActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
+
                                                 Toast.makeText(EditActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
                                                 finish();
                                             }
                                         }
                                     });
                                 } else {
+                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(EditActivity.this, "Failed to update Profile", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(EditActivity.this, "Username is already used", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(EditActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

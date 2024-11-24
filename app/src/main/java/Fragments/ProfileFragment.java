@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment {
                 if (snapshot.exists()) {
                     List<User> userList = new ArrayList<>();
 
-                    // Collect all users into a list
+
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         User fetchedUser = userSnapshot.getValue(User.class);
                         if (fetchedUser != null) {
@@ -138,27 +138,27 @@ public class ProfileFragment extends Fragment {
                         }
                     }
 
-                    // Sort the list by coins in descending order
+
                     userList.sort((u1, u2) -> Integer.compare(u2.getCoin(), u1.getCoin()));
 
                     int currentRank = 1;
                     boolean userRankFound = false;
 
-                    // Find the rank of the current user
+
                     for (User u : userList) {
                         if (u.getUserid().equals(userid)) {
                             user = u;
                             coins.setText(String.valueOf(user.getCoin()));
                             username.setText(user.getName());
                             bio.setText(user.getBio());
-                            rank.setText("#" + currentRank); // Set the rank dynamically
+                            rank.setText("#" + currentRank);
                             userRankFound = true;
                             break;
                         }
                         currentRank++;
                     }
 
-                    // If user rank is not found, display a default message
+
                     if (!userRankFound) {
                         rank.setText("N/A");
                         coins.setText("0");

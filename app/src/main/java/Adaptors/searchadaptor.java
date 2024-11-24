@@ -44,6 +44,7 @@ public class searchadaptor extends RecyclerView.Adapter<searchadaptor.viewholer>
             public void onClick(View v) {
                 Intent intent=new Intent(context, ChatActivity.class);
                 intent.putExtra("usermodel",userModel);
+                intent.putExtra("userid",userModel.getUserid());
                 context.startActivity(intent);
 
             }

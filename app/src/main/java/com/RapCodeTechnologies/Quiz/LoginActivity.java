@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser userid=auth.getCurrentUser();
         if(userid!=null){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            startActivity(new Intent(LoginActivity.this,UserMainActivity.class));
             finish();
         }
         else {
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressDialog.dismiss();
                     if(task.isSuccessful()){
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
                         progressDialog.dismiss();
                         finish();
 

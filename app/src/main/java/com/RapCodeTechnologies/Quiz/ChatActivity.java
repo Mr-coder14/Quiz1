@@ -53,8 +53,9 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(chatAdapter);
 
         String senderUid = FirebaseAuth.getInstance().getUid();
-        String receiverUid = userModel.getUserid();
+        String receiverUid =getIntent().getStringExtra("userid");
         if (username != null) {
+
             username.setText(userModel.getName());
         }
         senderRoom = senderUid + receiverUid;
@@ -99,10 +100,10 @@ public class ChatActivity extends AppCompatActivity {
                     reference.child(reference.push().getKey()).setValue(message);
                     FirebaseDatabase.getInstance().getReference().child("chatsRooms").child(receiverRoom)
                             .child(reference.push().getKey()).setValue(message);
-                    User userModel1 = new User(userModel.getPhno(), userModel.getName(), userModel.getUserid());
+                    User userModel1 = new User(userModel.getPhno(), userModel.getName(),receiverUid);
 
-                    chatrefrence.child(FirebaseAuth.getInstance().getUid()).child(userModel.getUserid()).setValue(userModel1);
-                    chatrefrence.child(userModel.getUserid()).child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    chatrefrence.child(FirebaseAuth.getInstance().getUid()).child(receiverUid).setValue(userModel1);
+                    chatrefrence.child(receiverUid).child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
@@ -114,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
                                 int newCount = currentCount + 1;
 
 
-                                DatabaseReference countRef = chatrefrence.child(userModel.getUserid()).child(FirebaseAuth.getInstance().getUid()).child("messagecount");
+                                DatabaseReference countRef = chatrefrence.child(receiverUid).child(FirebaseAuth.getInstance().getUid()).child("messagecount");
                                 countRef.setValue(newCount);
                             }
                         }
