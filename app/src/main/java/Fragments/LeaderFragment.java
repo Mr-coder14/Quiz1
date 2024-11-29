@@ -5,9 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.graphics.ImageDecoderKt;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,15 +65,15 @@ public class LeaderFragment extends Fragment {
         firstplace=view.findViewById(R.id.firstplace);
         seocndplace=view.findViewById(R.id.secondplace);
         thirdplace=view.findViewById(R.id.thirdplace);
-         layout=view.findViewById(R.id.layoutleaders);
+        layout=view.findViewById(R.id.layoutleaders);
         secondplaecoin=view.findViewById(R.id.secondplacecoin);
         firplacecoin=view.findViewById(R.id.firstplacecoin);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
         firstpalceimg = view.findViewById(R.id.firstplaceimageview);
         secongplaceimg=view.findViewById(R.id.secondimageview);
         thirdplaceimg=view.findViewById(R.id.thirdplaceimageview);
-       globalLeaderBtn = view.findViewById(R.id.Globalleader);
-       friendLeaderBtn = view.findViewById(R.id.friendleader);
+        globalLeaderBtn = view.findViewById(R.id.Globalleader);
+        friendLeaderBtn = view.findViewById(R.id.friendleader);
         userid=FirebaseAuth.getInstance().getUid();
         fetchcoins();
         recyclerView.setNestedScrollingEnabled(false);
@@ -132,15 +130,13 @@ public class LeaderFragment extends Fragment {
             globalLeaderBtn.setBackgroundResource(R.drawable.gray_bg);
             globalLeaderBtn.setTextColor(getResources().getColor(R.color.black));
 
-
-
         });
         return view;
     }
 
 
     private void fetchcoins() {
-        progressBar.setVisibility(View.VISIBLE); // Show ProgressBar before fetching data
+        progressBar.setVisibility(View.VISIBLE);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -180,16 +176,16 @@ public class LeaderFragment extends Fragment {
 
                     for (int i = 3; i < allUsers.size(); i++) {
                         LeaderBoard user = allUsers.get(i);
-                        user.setNo(i + 1); // Set rank
+                        user.setNo(i + 1);
                         leaderBoards.add(user);
                     }
 
-                    // Update UI only if fragment is still attached
+
                     if (getActivity()!=null) {
                         getActivity().runOnUiThread(() -> {
-                            adaptor.notifyDataSetChanged(); // Notify adapter
+                            adaptor.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
-                            layout.setVisibility(View.VISIBLE);// Hide ProgressBar after data loads
+                            layout.setVisibility(View.VISIBLE);
                         });
                     }
                 } else {
@@ -197,8 +193,6 @@ public class LeaderFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         layout.setVisibility(View.VISIBLE);
                     }
-                         // Hide ProgressBar if no data
-
                 }
             }
 
@@ -206,7 +200,7 @@ public class LeaderFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 if (getActivity()!=null) {
                     progressBar.setVisibility(View.GONE);
-                    layout.setVisibility(View.VISIBLE);// Hide ProgressBar on error
+                    layout.setVisibility(View.VISIBLE);
                 }
             }
         });

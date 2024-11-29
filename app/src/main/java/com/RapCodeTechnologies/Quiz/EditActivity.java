@@ -48,7 +48,6 @@ public class EditActivity extends AppCompatActivity {
             R.drawable.edit,
             R.drawable.edit
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +86,7 @@ public class EditActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_image_selection, null);
 
         GridView gridView = dialogView.findViewById(R.id.imageGridView);
-        ImageGridAdapter adapter = new ImageGridAdapter(this, imageResources); // Use ImageGridAdapter
+        ImageGridAdapter adapter = new ImageGridAdapter(this, imageResources);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
