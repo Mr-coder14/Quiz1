@@ -22,7 +22,7 @@ import Models.LeaderBoard;
 public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewholder> {
     private ArrayList<LeaderBoard> leaderBoards;
     private Context context;
-    //gfgf
+
     public LeadersAdaptor(ArrayList<LeaderBoard> leaderBoards){
         this.leaderBoards=leaderBoards;
     }
