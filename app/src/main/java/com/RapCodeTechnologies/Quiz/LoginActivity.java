@@ -56,10 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn=findViewById(R.id.loginbtn);
         email=findViewById(R.id.emaillogin);
         forget=findViewById(R.id.forgettxt);
-<<<<<<< HEAD
-        //vankamdamapula
-=======
->>>>>>> fe328880ceb09e7b15bc3a189390a43457e548bd
+
         forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
