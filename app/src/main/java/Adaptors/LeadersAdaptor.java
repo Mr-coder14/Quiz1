@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.RapCodeTechnologies.Quiz.ProfileActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -40,9 +41,14 @@ public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewhold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, ProfileActivity.class);
-                intent.putExtra("userid",leaderBoard.getUserid());
-                context.startActivity(intent);
+                if(leaderBoard.getUserid().equals(FirebaseAuth.getInstance().getUid())){
+
+                }else {
+                    Intent intent=new Intent(context, ProfileActivity.class);
+                    intent.putExtra("userid",leaderBoard.getUserid());
+                    context.startActivity(intent);
+                }
+
 
             }
         });
