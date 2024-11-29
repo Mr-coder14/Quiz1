@@ -40,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        //dfdfd
+
         txt=findViewById(R.id.chat_edittxt);
         send=findViewById(R.id.send_message_btn);
         back=findViewById(R.id.chat_back_btn);

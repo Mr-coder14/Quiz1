@@ -24,5 +24,9 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 material-v1 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 
 [plugins]
+<<<<<<< HEAD
 androidApplication = { id = "com.android.application", version = "8.0.2" }
+=======
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+>>>>>>> fe328880ceb09e7b15bc3a189390a43457e548bd
 
