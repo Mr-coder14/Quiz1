@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:orientation="horizontal"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        ></LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_bg"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:layout_gravity="end"
+        >
+        <TextView
+            android:id="@+id/chat_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="hiii"
+            android:layout_gravity="start|top"
+            android:fontFamily="@font/plus"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/chat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="9sp"
+            android:layout_marginLeft="5dp"
+            android:text="12.00 PM"
+            android:fontFamily="@font/plus"
+            android:layout_gravity="end|bottom"
+            android:layout_marginTop="1dp" />
+    </LinearLayout>
+
+
+</LinearLayout>
