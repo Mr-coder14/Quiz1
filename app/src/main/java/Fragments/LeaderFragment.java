@@ -89,20 +89,24 @@ public class LeaderFragment extends Fragment {
         firstplace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra("userid", allUsers.get(0).getUserid());
-                startActivity(intent);
+                if(!allUsers.get(0).getUserid().equals(userid)){
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    intent.putExtra("userid", allUsers.get(0).getUserid());
+                    startActivity(intent);
+                }
+
             }
         });
         seocndplace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (allUsers.size() > 1) {
-                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                    intent.putExtra("userid", allUsers.get(1).getUserid()
 
-                    );
-                    startActivity(intent);
+                    if(!allUsers.get(1).getUserid().equals(userid)){
+                        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                        intent.putExtra("userid", allUsers.get(1).getUserid());
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -110,9 +114,11 @@ public class LeaderFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (allUsers.size() > 2) {
-                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                    intent.putExtra("userid", allUsers.get(2).getUserid());
-                    startActivity(intent);
+                    if(!allUsers.get(2).getUserid().equals(userid)){
+                        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                        intent.putExtra("userid", allUsers.get(2).getUserid());
+                        startActivity(intent);
+                    }
                 }
             }
         });
