@@ -7,9 +7,6 @@
         android:id="@+id/action_report"
         android:title="Report User" />
     <item
-        android:id="@+id/action_message"
-        android:title="Message" />
-    <item
         android:id="@+id/action_share"
         android:title="Share" />
 </menu>

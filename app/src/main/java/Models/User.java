@@ -5,8 +5,17 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String userid;
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     private String phno;
-    private String bio;
+    private String bio,profile;
     private int coin;
     private int messagecount;
     public int getMessagecount() {
@@ -88,6 +97,7 @@ public class User implements Parcelable {
         name = in.readString();
         email = in.readString();
         bio=in.readString();
+        profile=in.readString();
         coin=in.readInt();
         userid = in.readString();
         phno = in.readString();
@@ -118,5 +128,6 @@ public class User implements Parcelable {
         dest.writeString(userid);
         dest.writeString(bio);
         dest.writeString(phno);
+        dest.writeString(profile);
     }
 }

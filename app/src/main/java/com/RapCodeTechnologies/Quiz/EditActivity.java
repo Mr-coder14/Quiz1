@@ -38,6 +38,7 @@ public class EditActivity extends AppCompatActivity {
     private ImageView imageView,edit;
     private ImageView back;
     private EditText username,bio;
+    private String resourceName;
     private LinearLayout discard,confirm;
     private ProgressBar progressBar;
     private String userid;
@@ -59,7 +60,7 @@ public class EditActivity extends AppCompatActivity {
         imageView=findViewById(R.id.profileImageu);
         edit=findViewById(R.id.chamgepic);
         progressBar=findViewById(R.id.progressBaredit);
-
+        resourceName="person3";
         bio=findViewById(R.id.bioInput);
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
@@ -91,6 +92,7 @@ public class EditActivity extends AppCompatActivity {
 
         gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             imageView.setImageResource(imageResources[position]);
+             resourceName = getResources().getResourceEntryName(imageResources[position]);
             Toast.makeText(EditActivity.this, "Image Selected", Toast.LENGTH_SHORT).show();
         });
 
@@ -118,6 +120,16 @@ public class EditActivity extends AppCompatActivity {
             Toast.makeText(EditActivity.this, "Bio cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        databaseReference.child(userid).child("profile").setValue(resourceName)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(EditActivity.this, "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EditActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

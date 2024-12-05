@@ -31,7 +31,7 @@ public class ResultFragment extends Fragment {
     boolean coinadded=false;
     private String userId;
     private ProgressBar loadingProgressBar;
-    private static final String ARG_TOTAL_QUESTIONS = "total_questions";
+    private static final String ARG_TOTAL_QUESTIONS = "total_questions",quizId = "selected_quiz_id";
     private static final String ARG_USER_ID = "user_id";
 
     private LottieAnimationView animationView;
@@ -41,10 +41,11 @@ public class ResultFragment extends Fragment {
     private TextView resultTextView, resultUsername, resultCoinTextView,eranedcoin,addingcoin;
     private DatabaseReference databaseReference;
 
-    public static ResultFragment newInstance(int score, int totalQuestions, String userId) {
+    public static ResultFragment newInstance(int score, int totalQuestions, String userId,String quizIsd) {
         ResultFragment fragment = new ResultFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SCORE, score);
+        args.putString(quizId,quizIsd);
         args.putInt(ARG_TOTAL_QUESTIONS, totalQuestions);
         args.putString(ARG_USER_ID, userId);
         fragment.setArguments(args);
@@ -191,6 +192,9 @@ public class ResultFragment extends Fragment {
                     addingcoin.setText(" + " + coins);
 
                     resultUsername.setText(name);
+
+
+                    saveRecentQuiz(userId);
                     loadingProgressBar.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
 
@@ -208,6 +212,17 @@ public class ResultFragment extends Fragment {
             }
         });
     }
+
+    private void saveRecentQuiz(String userId) {
+        String quizdsId = getArguments().getString(quizId);
+        DatabaseReference recentQuizzesRef = FirebaseDatabase.getInstance()
+                .getReference("recent_quizzes")
+                .child(quizdsId)
+                .child(userId);
+
+        recentQuizzesRef.setValue(true);
+    }
+
     private void navigateToMainActivity() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), UserMainActivity.class);

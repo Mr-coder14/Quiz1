@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.RapCodeTechnologies.Quiz.EditActivity;
 import com.RapCodeTechnologies.Quiz.LoginActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private String userid;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+    private ShapeableImageView img;
     private ScrollView lo;
     private LinearLayout edit;
 
@@ -57,6 +61,7 @@ public class ProfileFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         coins=view.findViewById(R.id.pointsprofile);
         rank=view.findViewById(R.id.rankprofile);
+        img=view.findViewById(R.id.profileImage);
         followers=view.findViewById(R.id.Followersprofile);
         auth=FirebaseAuth.getInstance();
         edit=view.findViewById(R.id.editIcon);
@@ -152,6 +157,17 @@ public class ProfileFragment extends Fragment {
                             username.setText(user.getName());
                             bio.setText(user.getBio());
                             rank.setText("#" + currentRank);
+                            String imageKey=user.getProfile();
+                            if (!TextUtils.isEmpty(imageKey)) {
+                                int imageResId = getResources().getIdentifier(imageKey, "drawable", requireContext().getPackageName());
+                                if (imageResId != 0) {
+                                    img.setImageResource(imageResId);
+                                } else {
+                                    img.setImageResource(R.drawable.custom_progress_bar);
+                                }
+                            } else {
+                                img.setImageResource(R.drawable.custom_progress_bar);
+                            }
                             userRankFound = true;
                             break;
                         }

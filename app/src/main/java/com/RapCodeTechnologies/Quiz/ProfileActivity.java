@@ -3,6 +3,7 @@ package com.RapCodeTechnologies.Quiz;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,10 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout message,connect;
     private ImageView imageView,backpr,more;
     private User user,currentuser;
+    private ShapeableImageView img;
     private boolean isRequestSent = false;
     private DatabaseReference followersRef;
-
-
     private FirebaseUser us;
 
     @Override
@@ -60,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         lo.setVisibility(View.GONE);
         connect=findViewById(R.id.connectButton);
         more=findViewById(R.id.more);
+        img=findViewById(R.id.profileImage);
         backpr=findViewById(R.id.backpr);
         imageView=findViewById(R.id.fees);
         progressBar.setVisibility(View.VISIBLE);
@@ -81,6 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
         updateImageViewBasedOnText();
         userinformation();
         currentuserinfo();
+        checkisfollowed();
         fetchFollowersCount();
         backpr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Remove the request from Firebase
+
                                     requests.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -117,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     });
                                 }
                             })
-                            .setNegativeButton("No", null) // Do nothing on "No"
+                            .setNegativeButton("No", null)
                             .show();
                 } else if (currentStatus.equals("Followed")) {
 
@@ -127,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Remove the follower
+
                                     followersRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -145,7 +148,7 @@ public class ProfileActivity extends AppCompatActivity {
                             .setNegativeButton("No", null)
                             .show();
                 } else if (currentStatus.equals("Connect")) {
-                    // Send a follow request
+
                     requests.setValue(currentuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -179,6 +182,22 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void checkisfollowed() {
+        followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                     message.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.getMenuInflater().inflate(R.menu.profile_menu, popupMenu.getMenu());
@@ -195,12 +214,7 @@ public class ProfileActivity extends AppCompatActivity {
                 handleReportUser();
                 return true;
             }
-                if(id== R.id.action_message){
-                    Intent messageIntent = new Intent(ProfileActivity.this, ChatActivity.class);
-                    messageIntent.putExtra("usermodel", user);
-                    messageIntent.putExtra("userid",user.getUserid());
-                    startActivity(messageIntent);
-                    return true;}
+
 
                 if(id== R.id.action_share) {
                     shareProfile();
@@ -237,10 +251,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void handleReportUser() {
-        // Example: Open a new activity for reporting the user
-//        Intent intent = new Intent(ProfileActivity.this, ReportActivity.class);
-//        intent.putExtra("userid", userid); // Pass the reported user's ID
-//        startActivity(intent);
+
     }
 
     private void shareProfile() {
@@ -361,6 +372,17 @@ public class ProfileActivity extends AppCompatActivity {
                             coins.setText(String.valueOf(user.getCoin()));
                             rank.setText("#" + currentRank);
                             bio.setText(user.getBio()==null || user.getBio()==""? "N/A":user.getBio());
+                            String imageKey=user.getProfile();
+                            if (!TextUtils.isEmpty(imageKey)) {
+                                int imageResId = getResources().getIdentifier(imageKey, "drawable", getPackageName());
+                                if (imageResId != 0) {
+                                    img.setImageResource(imageResId);
+                                } else {
+                                    img.setImageResource(R.drawable.person3);
+                                }
+                            } else {
+                                imageView.setImageResource(R.drawable.person3);
+                            }
                             viewedUserRankFound = true;
                             break;
                         }

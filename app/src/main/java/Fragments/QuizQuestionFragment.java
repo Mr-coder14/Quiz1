@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.RapCodeTechnologies.Quiz.QuizActivity;
@@ -32,6 +33,7 @@ public class QuizQuestionFragment extends Fragment {
     private String correctAnswer;
 
     private ImageView imageView;
+    private ProgressBar questionLoadingProgressBar;
     private OnCorrectAnswerListener onCorrectAnswerListener;
 
     public interface OnCorrectAnswerListener {
@@ -77,6 +79,7 @@ public class QuizQuestionFragment extends Fragment {
         optionA = view.findViewById(R.id.optionA);
         optionB = view.findViewById(R.id.optionB);
         optionC = view.findViewById(R.id.optionC);
+        questionLoadingProgressBar=view.findViewById(R.id.questionLoadingProgressBar);
         imageView=view.findViewById(R.id.imageviewques);
         optionD = view.findViewById(R.id.optionD);
 
@@ -90,7 +93,7 @@ public class QuizQuestionFragment extends Fragment {
             optionD.setText(getArguments().getString("optionD"));
             correctAnswer = getArguments().getString("correctAnswer");
             int questionIndex = getArguments().getInt("questionIndex");
-            loadRandomImage(questionIndex);
+            loadQuestionWithProgress(questionIndex);
 
 
         }
@@ -106,7 +109,7 @@ public class QuizQuestionFragment extends Fragment {
         return view;
     }
 
-    private void loadRandomImage(int questionIndex) {
+    private void loadRandomImage(int questionIndex, Runnable onImageLoaded) {
         String[] techImageUrls = {
                 "https://picsum.photos/id/0/600/400",
                 "https://picsum.photos/id/1/600/400",
@@ -124,30 +127,51 @@ public class QuizQuestionFragment extends Fragment {
 
         Glide.with(this)
                 .load(query)
-                .placeholder(R.drawable.baseline_access_alarms_24) // Placeholder drawable while loading
-                .error(R.drawable.baseline_access_alarms_24) // Error drawable if load fails
+                .placeholder(R.drawable.baseline_access_alarms_24)
+                .error(R.drawable.baseline_access_alarms_24)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        // Handle failure (optional)
-                        if (onImageLoadListener != null) {
-                            onImageLoadListener.onImageLoad(); // Notify failure or clearing of image load
-                        }
-                        return false; // Let Glide handle the error (e.g., show error drawable)
+                        onImageLoaded.run(); // Proceed even if image fails to load
+                        return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
-                        if (onImageLoadListener != null) {
-                            onImageLoadListener.onImageLoad(); // Notify that image load is complete
-                        }
+                        onImageLoaded.run(); // Notify that image load is complete
                         return false;
                     }
-
-
                 })
                 .into(imageView);
     }
+    private void loadQuestionWithProgress(int questionIndex) {
+        // Show progress bar while loading the question
+        questionLoadingProgressBar.setVisibility(View.VISIBLE);
+        questionTextView.setVisibility(View.INVISIBLE);
+        optionA.setVisibility(View.INVISIBLE);
+        optionB.setVisibility(View.INVISIBLE);
+        optionC.setVisibility(View.INVISIBLE);
+        optionD.setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.INVISIBLE);
+
+        // Load random image
+        loadRandomImage(questionIndex, () -> {
+            // Once image is loaded, show all question-related elements
+            questionLoadingProgressBar.setVisibility(View.GONE);
+            questionTextView.setVisibility(View.VISIBLE);
+            optionA.setVisibility(View.VISIBLE);
+            optionB.setVisibility(View.VISIBLE);
+            optionC.setVisibility(View.VISIBLE);
+            optionD.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.VISIBLE);
+
+            // Notify parent activity that the image has finished loading
+            if (onImageLoadListener != null) {
+                onImageLoadListener.onImageLoad();
+            }
+        });
+    }
+
 
 
 

@@ -2,10 +2,14 @@ package Adaptors;
 
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.RapCodeTechnologies.Quiz.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class ImageGridAdapter extends BaseAdapter {
     private Context context;
@@ -33,15 +37,14 @@ public class ImageGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
         if (convertView == null) {
-            imageView = new ImageView(context);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(200, 200));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } else {
-            imageView = (ImageView) convertView;
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(R.layout.grid_item_image, parent, false);
         }
+
+        ShapeableImageView imageView = convertView.findViewById(R.id.imageViewItem);
         imageView.setImageResource(imageResources[position]);
-        return imageView;
+
+        return convertView;
     }
 }

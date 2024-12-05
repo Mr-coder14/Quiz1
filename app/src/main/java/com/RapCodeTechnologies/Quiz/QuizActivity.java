@@ -31,7 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final int QUESTION_TIME = 30000;
     private static final int TIMER_INTERVAL = 1000;
     private int currentQuestionIndex = 0;
-    private String userid;
+    private String userid,title;
     private TextView quiztitle,timer,questionCount;
     private ProgressBar quizprogress;
     private ImageButton imageButton;
@@ -50,6 +50,7 @@ public class QuizActivity extends AppCompatActivity {
         imageButton=findViewById(R.id.backquiz);
         quizDatabase = FirebaseDatabase.getInstance().getReference("quiz_questions");
         progressBar1.setVisibility(View.VISIBLE);
+        title=quiztitle.getText().toString();
         loadQuestionsFromFirebase();
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -103,21 +104,27 @@ public class QuizActivity extends AppCompatActivity {
                     question.getQuestionIndex()
             );
 
+            // Listener for image loading completion
             fragment.setOnImageLoadListener(() -> {
-
                 fragment.setOnCorrectAnswerListener(() -> score++);
-                quizprogress.setProgress((currentQuestionIndex - 1) * 100 / questionList.size());
-                questionCount.setText(String.valueOf(currentQuestionIndex)+"/"+String.valueOf(questionList.size()));
+
+                // Update progress bar and question count AFTER image is loaded
+                quizprogress.setProgress((currentQuestionIndex) * 100 / questionList.size());
+                questionCount.setText((currentQuestionIndex ) + "/" + questionList.size());
+
+
+                // Start the timer after the question is loaded
                 startTimer();
             });
 
+            // Replace the fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainerquiz, fragment);
             transaction.commit();
 
             currentQuestionIndex++;
         } else {
-
+            // Show result when no more questions are left
             showResultFragment();
         }
     }
@@ -127,16 +134,16 @@ public class QuizActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
 
+        // Reset and start the timer
         countDownTimer = new CountDownTimer(QUESTION_TIME, TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-
-                timer.setText(String.valueOf(millisUntilFinished / 1000  + "s"));
+                timer.setText((millisUntilFinished / 1000) + "s");
             }
 
             @Override
             public void onFinish() {
-
+                // Automatically load the next question when time runs out
                 loadNextQuestion();
             }
         };
@@ -156,7 +163,7 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.backquiz).setVisibility(View.GONE);
 
 
-        ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size(), userid);
+        ResultFragment resultFragment = ResultFragment.newInstance(score, questionList.size(), userid,title);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainerquiz, resultFragment);
         transaction.commit();
