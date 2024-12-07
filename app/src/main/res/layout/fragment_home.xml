@@ -87,102 +87,13 @@
                         android:id="@+id/messager"/>
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/bannerViewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/gray_bg"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageView9"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            app:tint="@color/black"
-                            app:srcCompat="@drawable/btn1" />
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="18dp"
-                            android:gravity="center_horizontal"
-                            android:text="Create Quiz"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
-                        android:layout_weight="1"
-                        android:id="@+id/quiztimee"
-                        android:background="@drawable/gray_bg"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            app:srcCompat="@drawable/btn2"
-                            app:tint="@color/black"/>
-                        <TextView
-                            android:id="@+id/textView1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="18dp"
-                            android:gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:text="Single Player"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/gray_bg"
-
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="match_parent"
-                            app:tint="@color/black"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            app:srcCompat="@drawable/btn3" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="18dp"
-                            android:gravity="center_horizontal"
-                            android:text="Multi Player"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:layout_height="190dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -402,7 +313,7 @@
                         app:srcCompat="@drawable/coins" />
 
                     <TextView
-                        android:id="@+id/startnowcoin"
+                        android:id="@+id/quiztimee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="112dp"
