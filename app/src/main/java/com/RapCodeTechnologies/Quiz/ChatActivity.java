@@ -139,17 +139,17 @@ public class ChatActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("chatsRooms").child(receiverRoom)
                             .child(reference.push().getKey()).setValue(message);
 
-                    User userModel1 = new User(userModel.getPhno(), userModel.getName(), receiverUid);
+                    User userModel1 = new User(userModel.getName(), receiverUid);
                     chatrefrence.child(FirebaseAuth.getInstance().getUid()).child(receiverUid).setValue(userModel1);
 
-                    // Check if the receiver is not actively viewing the chat
+
                     FirebaseDatabase.getInstance().getReference().child("activeUsers").child(receiverUid)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     boolean isActive = snapshot.exists() && snapshot.getValue(Boolean.class);
                                     if (!isActive) {
-                                        // Only increment the message count if the receiver is inactive
+
                                         chatrefrence.child(receiverUid).child(FirebaseAuth.getInstance().getUid())
                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override

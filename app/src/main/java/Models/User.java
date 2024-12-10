@@ -14,7 +14,6 @@ public class User implements Parcelable {
         this.profile = profile;
     }
 
-    private String phno;
     private String bio,profile;
     private int coin;
     private int messagecount;
@@ -34,17 +33,16 @@ public class User implements Parcelable {
     }
 
 
-    public User(String name, String email, String phno, String userid,int coin) {
+    public User(String name, String email, String userid,int coin,String bio) {
         this.name = name;
         this.coin=coin;
         this.email = email;
-        this.phno = phno;
         this.userid = userid;
+        this.bio=bio;
     }
 
-    public User(String phno, String name, String userid) {
+    public User( String name, String userid) {
         this.name = name;
-        this.phno = phno;
         this.userid = userid;
     }
 
@@ -84,13 +82,7 @@ public class User implements Parcelable {
 
 
 
-    public String getPhno() {
-        return phno;
-    }
 
-    public void setPhno(String phno) {
-        this.phno = phno;
-    }
 
     // Parcelable methods
     protected User(Parcel in) {
@@ -100,7 +92,7 @@ public class User implements Parcelable {
         profile=in.readString();
         coin=in.readInt();
         userid = in.readString();
-        phno = in.readString();
+
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -127,7 +119,7 @@ public class User implements Parcelable {
         dest.writeInt(coin);
         dest.writeString(userid);
         dest.writeString(bio);
-        dest.writeString(phno);
+
         dest.writeString(profile);
     }
 }

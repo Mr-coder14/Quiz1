@@ -14,12 +14,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Create Your Account"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:fontFamily="@font/lato"
@@ -76,33 +77,10 @@
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:textSize="16sp"
                 android:drawablePadding="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:textColorHint="@color/LightGray"
                 android:hint="Enter your name" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone Number"
-                android:textSize="20sp"
-                android:fontFamily="@font/lato"
-                android:textColor="@color/black"
-                android:layout_marginBottom="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/plus"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:id="@+id/phnoregister"
-                android:textColor="@color/black"
-                android:inputType="number"
-                android:drawableLeft="@drawable/baseline_email_24"
-                android:textSize="16sp"
-                android:drawablePadding="10dp"
-                android:layout_marginBottom="20dp"
-                android:textColorHint="@color/LightGray"
-                android:hint="Enter your name" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,7 +110,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Re Enter The Password"
-
                 android:textSize="20sp"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/black"
@@ -150,10 +127,31 @@
                 android:textSize="16sp"
                 android:drawablePadding="10dp"
                 android:inputType="textPassword"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="14dp"
                 android:textColorHint="@color/LightGray"
                 android:id="@+id/repasswordregister"
                 android:hint="Enter your Password" />
+            <CheckBox
+                android:id="@+id/checkbox_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I accept the Terms and Condition , Privacy Policy.The Privacy Policy explains how we handle your data securely and ensure your information's confidentiality."
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/plus"
+                android:textColor="@color/black" />
+
+            <CheckBox
+                android:id="@+id/checkbox_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I confirm I am above 13 years old, This app is not intended for users under the age of 13. Please ensure you meet this requirement."
+                android:textSize="12sp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/plus"
+                android:textColor="@color/black" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.RapCodeTechnologies.Quiz.ChatActivity;
+import com.RapCodeTechnologies.Quiz.ProfileActivity;
 import com.RapCodeTechnologies.Quiz.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -45,8 +46,7 @@ public class searchadaptor extends RecyclerView.Adapter<searchadaptor.viewholer>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, ChatActivity.class);
-                intent.putExtra("usermodel",userModel);
+                Intent intent=new Intent(context, ProfileActivity.class);
                 intent.putExtra("userid",userModel.getUserid());
                 context.startActivity(intent);
 
@@ -61,7 +61,7 @@ public class searchadaptor extends RecyclerView.Adapter<searchadaptor.viewholer>
     }
 
     public class viewholer extends RecyclerView.ViewHolder {
-        private TextView name,phno;
+        private TextView name;
         private ShapeableImageView imageViewv;
         public viewholer(@NonNull View itemView) {
             super(itemView);
