@@ -58,7 +58,6 @@ public class FollowersActivity extends AppCompatActivity {
                     for (DataSnapshot useri : snapshot.getChildren()) {
                         if (useri.getKey() != null) {
                             userids.add(useri.getKey());
-                            Toast.makeText(FollowersActivity.this, useri.getKey(), Toast.LENGTH_SHORT).show();
                         }
                     }
                     fetchusers();
@@ -86,7 +85,7 @@ public class FollowersActivity extends AppCompatActivity {
                             User user = userSnapshot.getValue(User.class);
                             if (user != null) {
                                 arrayList.add(user);
-                                Toast.makeText(FollowersActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     }

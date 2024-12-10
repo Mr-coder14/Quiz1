@@ -44,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ScrollView lo;
     private LinearLayout message,connect;
     private ImageView imageView,backpr,more;
+    private LinearLayout layout;
     private User user,currentuser;
     private ShapeableImageView img;
     private boolean isRequestSent = false;
@@ -54,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        layout=findViewById(R.id.folowes);
         username=findViewById(R.id.usernametxt);
         progressBar = findViewById(R.id.progressBarprofile);
         lo=findViewById(R.id.lo);
@@ -85,6 +86,14 @@ public class ProfileActivity extends AppCompatActivity {
         currentuserinfo();
         checkisfollowed();
         fetchFollowersCount();
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ProfileActivity.this,FollowersActivity.class);
+                intent.putExtra("userid",userid);
+                startActivity(intent);
+            }
+        });
         backpr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

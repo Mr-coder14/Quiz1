@@ -26,8 +26,8 @@ public class FollowersAdaptor extends RecyclerView.Adapter<FollowersAdaptor.view
     private Context context;
     public FollowersAdaptor(ArrayList<User> arrayList, Context context)
     {
-        arrayList=this.arrayList;
-        context=this.context;
+        this.arrayList=arrayList;
+        this.context=context;
     }
     @NonNull
     @Override
