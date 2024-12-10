@@ -2,7 +2,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/blue_bg"
-    android:padding="5dp"
+    android:backgroundTint="#00BCD4"
+    android:padding="7dp"
     android:orientation="horizontal"
     android:layout_marginTop="5dp"
     android:layout_gravity="start">
@@ -11,10 +12,14 @@
         android:id="@+id/chat_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginBottom="2dp"
+        android:maxWidth="280dp"
+        android:text="kjkdklkfjdkjkjk"
+        android:letterSpacing="0.02"
         android:layout_gravity="start|top"
         android:fontFamily="@font/plus"
+        android:layout_weight="9"
         android:textSize="16sp" />
 
     <TextView
@@ -24,7 +29,8 @@
         android:layout_marginLeft="5dp"
         android:layout_gravity="end|bottom"
         android:fontFamily="@font/plus"
-        android:textColor="@color/black"
+        android:layout_weight="1.5"
+        android:textColor="@color/white"
         android:textSize="9sp"
         android:layout_marginTop="1dp" />
 </LinearLayout>

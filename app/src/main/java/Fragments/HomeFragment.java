@@ -90,10 +90,10 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
     }
     private void loadBanners() {
         List<BannerItem> banners = new ArrayList<>();
-        banners.add(new BannerItem("Combo Offer!", "Blue Pen-3,Black-1", "Buy Now", Color.parseColor("#FFE4E1"), R.drawable.programming));
-        banners.add(new BannerItem("Combo Offer!", "Tip Pencil,Box,Scale,Eraser", "Shop Now", Color.parseColor("#E1F5FE"), R.drawable.technology));
-        banners.add(new BannerItem("Drafter Combo!", "Drafter,A3 Note", "Get Now", Color.parseColor("#f0df60"), R.drawable.programming));
-        banners.add(new BannerItem("Order Book!","Order your Favourite Book now!","Get Book",Color.parseColor("#FFE4E1"),R.drawable.technology));
+        banners.add(new BannerItem("Combo Offer!", "Blue Pen-3,Black-1", "Buy Now", Color.parseColor("#FFE4E1"), R.drawable.cat1));
+        banners.add(new BannerItem("Combo Offer!", "Tip Pencil,Box,Scale,Eraser", "Shop Now", Color.parseColor("#E1F5FE"), R.drawable.cat2));
+        banners.add(new BannerItem("Drafter Combo!", "Drafter,A3 Note", "Get Now", Color.parseColor("#f0df60"), R.drawable.cat3));
+        banners.add(new BannerItem("Order Book!","Order your Favourite Book now!","Get Book",Color.parseColor("#FFE4E1"),R.drawable.cat4));
         banners.add(new BannerItem("Order products!","Get the Products for Projects!","Get Products",Color.parseColor("#E1F5FE"),R.drawable.technology));
 
 

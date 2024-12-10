@@ -34,7 +34,7 @@ public class MessageListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private String userid;
     private ArrayList<User> userModels= new ArrayList<>();
-    private ArrayList<User> users= new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +44,15 @@ public class MessageListActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyluerviewchats);
         progressBar=findViewById(R.id.progressbarchat);
         progressBar.setVisibility(View.VISIBLE);
-
-        db1=FirebaseDatabase.getInstance().getReference().child("users");
-        recyclerView.setVisibility(View.GONE);
         userid= FirebaseAuth.getInstance().getUid();
+        db1=FirebaseDatabase.getInstance().getReference().child("users");
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("chatss").child(userid);
+        recyclerView.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        userdetials();
         adaptor = new ChatlistAdaptor(this, userModels,userid);
         recyclerView.setAdapter(adaptor);
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("chatss").child(userid);
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,15 +60,20 @@ public class MessageListActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void userdetials() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     userModels.clear();
                     for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                        User userModel=dataSnapshot.getValue(
-                                User.class);
+                        User userModel=dataSnapshot.getValue(User.class);
                         userModels.add(userModel);
+
                     }
                     adaptor.notifyDataSetChanged();
                 }else {
@@ -84,6 +90,5 @@ public class MessageListActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
-
     }
 }

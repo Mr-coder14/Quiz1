@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowMetrics;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -49,6 +52,9 @@ public class Searchuseractivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
+
+
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,4 +91,6 @@ public class Searchuseractivity extends AppCompatActivity {
         searchadaptor=new searchadaptor(this,userModels);
         recyclerView.setAdapter(searchadaptor);
     }
+
+
 }

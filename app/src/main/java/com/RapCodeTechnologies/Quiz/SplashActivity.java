@@ -16,8 +16,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         auth = FirebaseAuth.getInstance();
+
 
         new Handler().postDelayed(() -> {
             FirebaseUser userid = auth.getCurrentUser();
@@ -28,10 +28,10 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(SplashActivity.this, LoginActivity.class);
             }
 
-            // Add flags to clear the task and start a new one
+
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish(); // Close SplashActivity
+            finish();
         }, 3000);
     }
 }

@@ -2,6 +2,8 @@ package Adaptors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Shader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.RapCodeTechnologies.Quiz.ChatActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 
@@ -59,12 +62,25 @@ public class searchadaptor extends RecyclerView.Adapter<searchadaptor.viewholer>
 
     public class viewholer extends RecyclerView.ViewHolder {
         private TextView name,phno;
+        private ShapeableImageView imageViewv;
         public viewholer(@NonNull View itemView) {
             super(itemView);
             name= itemView.findViewById(R.id.user_profile_name);
+            imageViewv=itemView.findViewById(R.id.profilepicuserlist);
         }
         public void bind(User userModel){
             name.setText(userModel.getName());
+            String imageKey = userModel.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = context.getResources().getIdentifier(imageKey, "drawable", context.getPackageName());
+                if (imageResId != 0) {
+                    imageViewv.setImageResource(imageResId);
+                } else {
+                    imageViewv.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                imageViewv.setImageResource(R.drawable.unknownprofile);
+            }
 
         }
     }
