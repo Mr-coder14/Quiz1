@@ -1,5 +1,7 @@
 package Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,10 +85,19 @@ public class ProfileFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), EditActivity.class));
+                Intent intent = new Intent(getContext(), EditActivity.class);
+                startActivityForResult(intent, 100); // Pass a request code
             }
         });
         return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            userinformation(); // Refresh the profile data
+        }
     }
     private void dailogbox() {
         androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -137,6 +148,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void userinformation() {
+        progressBar.setVisibility(View.VISIBLE);
+        lo.setVisibility(View.GONE);
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {

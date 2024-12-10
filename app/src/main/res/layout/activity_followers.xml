@@ -6,6 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FollowersActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nod"
+        android:text="No Followers Found!"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:gravity="center"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
+        android:fontFamily="@font/lato"
+        />
     <ProgressBar
         android:id="@+id/progressBarfol"
         android:layout_width="40dp"

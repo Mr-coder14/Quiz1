@@ -1,5 +1,6 @@
 package com.RapCodeTechnologies.Quiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,14 +40,14 @@ public class EditActivity extends AppCompatActivity {
     private ImageView back;
     private EditText username,bio;
     private String resourceName;
-    private LinearLayout discard,confirm;
+    private LinearLayout discard,confirm,gr,iuo;
     private ProgressBar progressBar;
     private String userid;
     private DatabaseReference databaseReference;
     private int[] imageResources = {
             R.drawable.person3,
             R.drawable.profile,
-            R.drawable.edit,
+            R.drawable.unknownprofile,
             R.drawable.edit
     };
     @Override
@@ -56,11 +57,16 @@ public class EditActivity extends AppCompatActivity {
         discard=findViewById(R.id.deiscardbutton);
         confirm=findViewById(R.id.SaveButton);
         back=findViewById(R.id.backpr);
+        gr=findViewById(R.id.gr);
+        iuo=findViewById(R.id.iuo);
         username=findViewById(R.id.usernameInput);
         imageView=findViewById(R.id.profileImageu);
         edit=findViewById(R.id.chamgepic);
         progressBar=findViewById(R.id.progressBaredit);
-        resourceName="person3";
+        gr.setVisibility(View.GONE);
+        iuo.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        resourceName="unknownprofile";
         bio=findViewById(R.id.bioInput);
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users");
@@ -79,8 +85,59 @@ public class EditActivity extends AppCompatActivity {
                 validateAndSaveUsername();
             }
         });
+        loadUserDetails();
 
     }
+
+    private void loadUserDetails() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        databaseReference.child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String userName = snapshot.child("name").getValue(String.class);
+                    String userBio = snapshot.child("bio").getValue(String.class);
+                    String profileImageKey = snapshot.child("profile").getValue(String.class);
+
+
+                    if (userName != null) {
+                        username.setText(userName);
+                    }
+                    if (userBio != null) {
+                        bio.setText(userBio);
+                    }
+
+
+                    if (profileImageKey != null) {
+                        resourceName = profileImageKey;
+                        int imageResId = getResources().getIdentifier(profileImageKey, "drawable", getPackageName());
+                        if (imageResId != 0) {
+                            imageView.setImageResource(imageResId);
+                        } else {
+                            imageView.setImageResource(R.drawable.unknownprofile);
+                        }
+                    } else {
+                        imageView.setImageResource(R.drawable.unknownprofile);
+                    }
+                } else {
+                    Toast.makeText(EditActivity.this, "Failed to load user details.", Toast.LENGTH_SHORT).show();
+                }
+                gr.setVisibility(View.VISIBLE);
+                iuo.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                gr.setVisibility(View.VISIBLE);
+                iuo.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(EditActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void showImageSelectionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -93,7 +150,7 @@ public class EditActivity extends AppCompatActivity {
         gridView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             imageView.setImageResource(imageResources[position]);
              resourceName = getResources().getResourceEntryName(imageResources[position]);
-            Toast.makeText(EditActivity.this, "Image Selected", Toast.LENGTH_SHORT).show();
+
         });
 
         builder.setView(dialogView);
@@ -105,6 +162,8 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void validateAndSaveUsername() {
+        gr.setVisibility(View.VISIBLE);
+        iuo.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         String enteredUsername = username.getText().toString().trim();
         String bioe=bio.getText().toString();
@@ -123,7 +182,7 @@ public class EditActivity extends AppCompatActivity {
         databaseReference.child(userid).child("profile").setValue(resourceName)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(EditActivity.this, "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+
                     } else {
                         Toast.makeText(EditActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
                     }
@@ -158,7 +217,9 @@ public class EditActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-
+                                                Intent resultIntent = new Intent();
+                                                setResult(RESULT_OK, resultIntent);
+                                                finish();
                                                 Toast.makeText(EditActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
                                                 progressBar.setVisibility(View.GONE);
                                                 finish();
