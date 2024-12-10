@@ -378,10 +378,10 @@ public class ProfileActivity extends AppCompatActivity {
                                 if (imageResId != 0) {
                                     img.setImageResource(imageResId);
                                 } else {
-                                    img.setImageResource(R.drawable.person3);
+                                    img.setImageResource(R.drawable.unknownprofile);
                                 }
                             } else {
-                                imageView.setImageResource(R.drawable.person3);
+                                imageView.setImageResource(R.drawable.unknownprofile);
                             }
                             viewedUserRankFound = true;
                             break;

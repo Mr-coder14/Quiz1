@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.RapCodeTechnologies.Quiz.EditActivity;
+import com.RapCodeTechnologies.Quiz.FollowersActivity;
 import com.RapCodeTechnologies.Quiz.LoginActivity;
 import com.RapCodeTechnologies.Quiz.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -41,7 +42,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar progressBar;
     private ShapeableImageView img;
     private ScrollView lo;
-    private LinearLayout edit;
+    private LinearLayout edit,follews;
 
 
     private User user;
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment {
         lo.setVisibility(View.GONE);
         bio=view.findViewById(R.id.userBio);
         progressBar.setVisibility(View.VISIBLE);
+        follews=view.findViewById(R.id.follews);
         coins=view.findViewById(R.id.pointsprofile);
         rank=view.findViewById(R.id.rankprofile);
         img=view.findViewById(R.id.profileImage);
@@ -70,6 +72,14 @@ public class ProfileFragment extends Fragment {
         database=FirebaseDatabase.getInstance().getReference().child("users").child(userid);
         userinformation();
         fetchFollowersCount();
+        follews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("userid",userid);
+                getActivity().startActivity(intent);
+            }
+        });
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
