@@ -10,17 +10,21 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.RapCodeTechnologies.Quiz.AllQuizActivity;
 import com.RapCodeTechnologies.Quiz.MessageListActivity;
 import com.RapCodeTechnologies.Quiz.QuizActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,14 +41,19 @@ import Models.User;
 
 public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClickListener {
     private TextView layout;
-    private ImageView imageView,profileimage;
+    private LinearLayout imageView;
     private TextView username,coinhome,seeallquizzes;
+    private ShapeableImageView shapeableImageView;
     private ViewPager2  bannerViewPager;
     private static final int BANNER_DELAY_MS=2000;
     private DatabaseReference databaseReference;
     private String userid;
     private Handler bannerHandler;
+    private DatabaseReference chatsReference;
+    private TextView messageCountBadge;
     private Runnable bannerRunnable;
+    private ProgressBar progressBar;
+    private LinearLayout dlayout;
     public HomeFragment() {
 
     }
@@ -59,12 +68,18 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         layout=view.findViewById(R.id.quiztimee);
         imageView=view.findViewById(R.id.messager);
         coinhome=view.findViewById(R.id.oinshome);
+        progressBar=view.findViewById(R.id.progressbarhome);
+        messageCountBadge = view.findViewById(R.id.messagecounttoatal);
+        shapeableImageView=view.findViewById(R.id.imageView3);
         seeallquizzes=view.findViewById(R.id.seeallquizzes);
+        dlayout=view.findViewById(R.id.homeee);
+        progressBar.setVisibility(View.VISIBLE);
+        dlayout.setVisibility(View.GONE);
         username=view.findViewById(R.id.homeusername);
         bannerViewPager=view.findViewById(R.id.bannerViewPager);
-        profileimage=view.findViewById(R.id.imageView3);
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users").child(userid);
+        chatsReference = FirebaseDatabase.getInstance().getReference().child("chatss").child(userid);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,10 +98,48 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
                 startActivity(new Intent(getContext(), QuizActivity.class));
             }
         });
-        fetuserdetails();
         loadBanners();
         setupAutoSwipeBanners();
+        fetchTotalMessageCount();
         return view;
+    }
+    private void fetchTotalMessageCount() {
+        chatsReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!isAdded()) {
+                    return; // Fragment is not attached to activity
+                }
+
+                int totalMessageCount = 0;
+
+                // Iterate through each child and sum up message counts
+                for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
+                    Long messageCount = chatSnapshot.child("messagecount").getValue(Long.class);
+                    if (messageCount != null) {
+                        totalMessageCount += messageCount;
+                    }
+                }
+
+                // Update the UI
+                if (totalMessageCount > 0) {
+                    messageCountBadge.setText(String.valueOf(totalMessageCount));
+                    messageCountBadge.setVisibility(View.VISIBLE);
+                } else {
+                    messageCountBadge.setVisibility(View.GONE);
+                }
+                fetuserdetails();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (!isAdded()) {
+                    return; // Fragment is not attached to activity
+                }
+
+                Toast.makeText(getContext(), "Failed to fetch message count.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void loadBanners() {
         List<BannerItem> banners = new ArrayList<>();
@@ -105,20 +158,48 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    User user=snapshot.getValue(User.class);
-                    username.setText("Hi, "+user.getName());
-                    coinhome.setText(String.valueOf(user.getCoin()));
-
+                if (!isAdded()) {
+                    // Fragment is not attached to the activity, so return early
+                    return;
                 }
+
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user != null) {
+                        username.setText("Hi, " + user.getName());
+                        coinhome.setText(String.valueOf(user.getCoin()));
+                        String imageKey = user.getProfile();
+                        if (!TextUtils.isEmpty(imageKey)) {
+                            int imageResId = getResources().getIdentifier(imageKey, "drawable", requireContext().getPackageName());
+                            if (imageResId != 0) {
+                                shapeableImageView.setImageResource(imageResId);
+                            } else {
+                                shapeableImageView.setImageResource(R.drawable.unknownprofile);
+                            }
+                        } else {
+                            shapeableImageView.setImageResource(R.drawable.unknownprofile);
+                        }
+                    }
+                }
+                progressBar.setVisibility(View.GONE);
+                dlayout.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                if (!isAdded()) {
+                    // Fragment is not attached to the activity, so return early
+                    return;
+                }
 
+                Toast.makeText(getContext(), "Failed to load user details. Please try again.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                dlayout.setVisibility(View.VISIBLE);
             }
         });
     }
+
+
     private void setupAutoSwipeBanners() {
 
         bannerHandler = new Handler(Looper.getMainLooper());

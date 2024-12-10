@@ -163,10 +163,10 @@ public class ProfileFragment extends Fragment {
                                 if (imageResId != 0) {
                                     img.setImageResource(imageResId);
                                 } else {
-                                    img.setImageResource(R.drawable.custom_progress_bar);
+                                    img.setImageResource(R.drawable.unknownprofile);
                                 }
                             } else {
-                                img.setImageResource(R.drawable.custom_progress_bar);
+                                img.setImageResource(R.drawable.unknownprofile);
                             }
                             userRankFound = true;
                             break;

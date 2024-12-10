@@ -1,340 +1,369 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/white"
     android:padding="1dp"
     tools:context="Fragments.HomeFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ProgressBar
+        android:id="@+id/progressbarhome"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/white_circle"
+        android:elevation="8dp"
+        android:indeterminateTint="@color/PrimaryColor"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Home_activity">
-        <ScrollView
-            android:id="@+id/scrollView2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/homeee"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
+            tools:context=".Home_activity">
+            <ScrollView
+                android:id="@+id/scrollView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/profile" />
-
-                    <TextView
-                        android:id="@+id/homeusername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="13dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/lato"
-                        android:text="Hi, Parmugilan"
-                        android:lines="1"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="39dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/gray_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:shapeAppearanceOverlay="@style/CircleImage"
+                            app:srcCompat="@drawable/profile" />
+
+                        <TextView
+                            android:id="@+id/homeusername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="13dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lato"
+                            android:text="Hi, Parmugilan"
+                            android:lines="1"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="39dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/gray_bg"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/garnet" />
+
+                            <TextView
+                                android:id="@+id/oinshome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_gravity="center"
+                                android:text="2000"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/messager"
+                            android:layout_gravity="center"
+                            >
+                            <include
+                                android:id="@+id/messageicon"
+                                layout="@layout/message_icon_with_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/bannerViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:padding="10dp">
 
-                        <ImageView
-                            android:id="@+id/imageView4"
+                        <TextView
+                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/garnet" />
+                            android:layout_margin="15dp"
+                            android:layout_weight="1"
+                            android:text="Quiz Categories"
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/oinshome"
+                            android:id="@+id/seeallquizzes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_gravity="center"
-                            android:text="2000"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="150dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:text="See All>>"
+                            android:textColor="#fcba03"
+                            android:textSize="13sp"
+
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="8dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/white_bg"
                             android:gravity="center"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
 
+
+                            <ImageView
+                                android:id="@+id/imageView67"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                app:srcCompat="@drawable/cat1" />
+
+                            <TextView
+                                android:id="@+id/textView7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:text="Science"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/white_bg"
+                            android:elevation="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                app:srcCompat="@drawable/cat2" />
+
+                            <TextView
+                                android:id="@+id/textVie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:text="History"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/message"
-                        android:id="@+id/messager"/>
-                </LinearLayout>
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/bannerViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="190dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:layout_weight="1"
-                        android:text="Quiz Categories"
-                        android:textColor="@color/black"
-                        android:textSize="19sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/seeallquizzes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="150dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_weight="1"
-                        android:text="See All>>"
-                        android:textColor="#fcba03"
-                        android:textSize="13sp"
-
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="2dp"
-                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="2dp"
-                        android:elevation="8dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/white_bg"
-                        android:gravity="center"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/white_bg"
+                            android:elevation="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView67"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/cat1" />
+                            <ImageView
+                                android:id="@+id/imageVi2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                app:srcCompat="@drawable/cat3" />
 
-                        <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:text="Science"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/textVie1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:text="Sports"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:elevation="8dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/white_bg"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView62"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                app:srcCompat="@drawable/cat4" />
+
+                            <TextView
+                                android:id="@+id/textVie4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:text="Arts"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/white_bg"
-                        android:elevation="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
+                        android:layout_height="200dp"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/gray_bg">
 
                         <ImageView
-                            android:id="@+id/imageView6"
+                            android:id="@+id/imageView7"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/cat2" />
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="1dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0"
+                            app:srcCompat="@drawable/arcs" />
 
                         <TextView
-                            android:id="@+id/textVie"
+                            android:id="@+id/textView8"
+                            android:layout_width="219dp"
+                            android:layout_height="51dp"
+                            android:layout_marginStart="10dp"
+                            android:text="Complete Quizzes To Earn More Coins"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:fontFamily="@font/lato"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/imageView7"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.201" />
+
+                        <ImageView
+                            android:id="@+id/imageView8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:text="History"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="28dp"
+                            android:layout_marginLeft="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView8"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0"
+                            app:srcCompat="@drawable/coins" />
+
+                        <TextView
+                            android:id="@+id/quiztimee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="112dp"
+                            android:background="@drawable/blue_bg"
+                            android:focusable="true"
+                            android:padding="10dp"
+                            android:text="Start Now"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageView7"
+                            app:layout_constraintVertical_bias="0.0" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/white_bg"
-                        android:elevation="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageVi2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/cat3" />
-
-                        <TextView
-                            android:id="@+id/textVie1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:text="Sports"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:elevation="8dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/white_bg"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageView62"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/cat4" />
-
-                        <TextView
-                            android:id="@+id/textVie4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:text="Arts"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/gray_bg">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="1dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/arcs" />
-
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="219dp"
-                        android:layout_height="51dp"
-                        android:layout_marginStart="10dp"
-                        android:text="Complete Quizzes To Earn More Coins"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:fontFamily="@font/lato"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/imageView7"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.201" />
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="28dp"
-                        android:layout_marginLeft="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView8"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/coins" />
-
-                    <TextView
-                        android:id="@+id/quiztimee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="112dp"
-                        android:background="@drawable/blue_bg"
-                        android:focusable="true"
-                        android:padding="10dp"
-                        android:text="Start Now"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageView7"
-                        app:layout_constraintVertical_bias="0.0" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
