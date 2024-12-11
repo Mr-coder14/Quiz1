@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/uiop1"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="10dp"
@@ -63,16 +64,16 @@
                     android:textSize="22sp"
                     />
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="23dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="15dp"
                     android:src="@drawable/search_icon"
                     android:id="@+id/search"
                     />
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/menu"
+                    android:src="@drawable/baseline_settings_24"
                     android:id="@+id/settings"
                     />
             </LinearLayout>
