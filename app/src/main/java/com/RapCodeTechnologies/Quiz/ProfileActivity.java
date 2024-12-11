@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
         checkIfBlocked();
         fetchrecentquizzes();
         RecentQuizesAdaptor adaptor=new RecentQuizesAdaptor(arrayLists,this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adaptor);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

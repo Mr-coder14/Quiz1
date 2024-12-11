@@ -4,6 +4,7 @@ package Adaptors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,8 @@ public class RequestAdaptor extends RecyclerView.Adapter<RequestAdaptor.viewHold
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()){
+                                            notifyItemRemoved(position);
+                                            arrayList.remove(position);
                                             Toast.makeText(context, "Request Accepted", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -85,6 +88,8 @@ public class RequestAdaptor extends RecyclerView.Adapter<RequestAdaptor.viewHold
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isComplete()){
+                                notifyItemRemoved(position);
+                                arrayList.remove(position);
                                 Toast.makeText(context, "Requested Deleted", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -117,10 +122,22 @@ public class RequestAdaptor extends RecyclerView.Adapter<RequestAdaptor.viewHold
             confirm=itemView.findViewById(R.id.confirmrequest);
             delete=itemView.findViewById(R.id.deleterequest);
             username=itemView.findViewById(R.id.user_profile_name);
+            imageView=itemView.findViewById(R.id.profilepicuserlist);
 
         }
         public void bind(User user){
               username.setText(user.getName());
+            String imageKey = user.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = context.getResources().getIdentifier(imageKey, "drawable", context.getPackageName());
+                if (imageResId != 0) {
+                    imageView.setImageResource(imageResId);
+                } else {
+                    imageView.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                imageView.setImageResource(R.drawable.unknownprofile);
+            }
         }
 
     }

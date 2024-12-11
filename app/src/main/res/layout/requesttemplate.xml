@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="3dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="1dp"
+    android:layout_marginLeft="1dp"
     android:gravity="center"
     android:layout_marginBottom="1dp"
     android:elevation="2dp">
@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/person3"
+        android:src="@drawable/unknownprofile"
         android:tint="@color/white"
         android:id="@+id/profilepicuserlist"/>
 
@@ -29,10 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Name"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:fontFamily="@font/lato"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="7dp"
+            android:lines="1"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:id="@+id/user_profile_name"/>
@@ -47,8 +48,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="8dp"
 
         >
         <androidx.appcompat.widget.AppCompatButton
@@ -61,7 +62,7 @@
             android:layout_marginRight="15dp"
             android:fontFamily="@font/lato"
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="10sp"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
             android:fontFamily="@font/lato"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="10sp"
             />
     </LinearLayout>
 
