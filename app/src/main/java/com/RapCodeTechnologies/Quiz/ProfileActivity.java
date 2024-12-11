@@ -80,12 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         followersRef = FirebaseDatabase.getInstance().getReference().child("followers").child(userid).child(userid_current);
         findViewById(R.id.fees).setVisibility(View.VISIBLE);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.baseline_person_add_alt_1_24));
-        checkRequestStatus();
-        updateImageViewBasedOnText();
-        userinformation();
-        currentuserinfo();
-        checkisfollowed();
-        fetchFollowersCount();
+        checkIfBlocked();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,6 +165,8 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
+                } else if (currentStatus.equals("UnBlock")) {
+                    handleUnblockUser();
                 }
             }
         });
@@ -190,13 +187,49 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+    private void checkIfBlocked() {
+        DatabaseReference blockedUsersRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("blocked_users")
+                .child(userid)
+                .child(userid_current);
+
+        blockedUsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    lo.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(ProfileActivity.this, "You cannot view this profile", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    checkRequestStatus();
+                    updateImageViewBasedOnText();
+                    userinformation();
+                    currentuserinfo();
+                    checkisfollowed();
+                    fetchFollowersCount();
+                    lo.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                lo.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(ProfileActivity.this, "Failed to check block status", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void checkisfollowed() {
         followersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()){
-                     message.setVisibility(View.GONE);
+                    message.setVisibility(View.GONE);
                 }
             }
 
@@ -212,23 +245,23 @@ public class ProfileActivity extends AppCompatActivity {
         popupMenu.getMenuInflater().inflate(R.menu.profile_menu, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(item -> {
-                int id=item.getItemId();
-               if(id==R.id.action_block){
-                   showBlockConfirmationDialog();
-                   return true;
-                }
+            int id=item.getItemId();
+            if(id==R.id.action_block){
+                showBlockConfirmationDialog();
+                return true;
+            }
 
 
-                if(id==R.id.action_report){
+            if(id==R.id.action_report){
                 handleReportUser();
                 return true;
             }
 
 
-                if(id== R.id.action_share) {
-                    shareProfile();
-                    return true;
-                }
+            if(id== R.id.action_share) {
+                shareProfile();
+                return true;
+            }
             return false;
         });
 
@@ -253,10 +286,13 @@ public class ProfileActivity extends AppCompatActivity {
         blockListRef.setValue(true).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(ProfileActivity.this, "User blocked successfully", Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(ProfileActivity.this, "Failed to block user", Toast.LENGTH_SHORT).show();
             }
         });
+        checkRequestStatus();
+        updateImageViewBasedOnText();
     }
 
     private void handleReportUser() {
@@ -279,7 +315,11 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (text.equals("Followed")) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.baseline_check_24));
-        } else if (text.equals("Requested")) {
+        }
+        else if(text.equals("UnBlock")){
+            imageView.setVisibility(View.GONE);
+        }
+        else if (text.equals("Requested")) {
             imageView.setVisibility(View.GONE);
         }
     }
@@ -310,25 +350,47 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void checkRequestStatus() {
-
         DatabaseReference combinedStatusRef = FirebaseDatabase.getInstance().getReference();
 
         combinedStatusRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean isFollower = snapshot.child("followers").child(userid).child(userid_current).exists();
-                boolean isRequestSent = snapshot.child("requests").child(userid).child(userid_current).exists();
+
+                boolean isBlocked = snapshot.child("blocked_users")
+                        .child(userid_current)
+                        .child(userid)
+                        .exists();
+
+                if (isBlocked) {
+                    txt.setText("UnBlock");
+                    message.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
+                    return;
+                }
+
+                // If not blocked, check other statuses
+                boolean isFollower = snapshot.child("followers")
+                        .child(userid)
+                        .child(userid_current)
+                        .exists();
+
+                boolean isRequestSent = snapshot.child("requests")
+                        .child(userid)
+                        .child(userid_current)
+                        .exists();
 
                 if (isFollower) {
                     txt.setText("Followed");
-                    updateImageViewBasedOnText();
+                    message.setVisibility(View.VISIBLE);
                 } else if (isRequestSent) {
                     txt.setText("Requested");
-                    updateImageViewBasedOnText();
+                    message.setVisibility(View.GONE);
                 } else {
                     txt.setText("Connect");
-                    updateImageViewBasedOnText();
+                    message.setVisibility(View.GONE);
                 }
+
+                updateImageViewBasedOnText();
             }
 
             @Override
@@ -417,6 +479,32 @@ public class ProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 lo.setVisibility(View.VISIBLE);
                 Toast.makeText(ProfileActivity.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void fetchDataAndInitialize() {
+        checkRequestStatus();
+        updateImageViewBasedOnText();
+        userinformation();
+        currentuserinfo();
+        checkisfollowed();
+        fetchFollowersCount();
+        lo.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
+    private void handleUnblockUser() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("blocked_users")
+                .child(userid_current)
+                .child(userid);
+
+        databaseReference.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ProfileActivity.this, "User unblocked successfully", Toast.LENGTH_SHORT).show();
+                fetchDataAndInitialize();
+            } else {
+                Toast.makeText(ProfileActivity.this, "Failed to unblock user", Toast.LENGTH_SHORT).show();
             }
         });
     }
