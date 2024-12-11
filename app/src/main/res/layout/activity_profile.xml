@@ -355,11 +355,12 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- User's Quiz Uploads -->
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Uploaded Quizzes"
+                android:text="Streak"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
@@ -367,23 +368,106 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp" />
 
-            <HorizontalScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
-
+                android:orientation="horizontal"
+                android:padding="6dp"
+                android:elevation="8dp"
+                android:layout_margin="3dp"
+                android:background="@drawable/white_bg"
+                >
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_yellow"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/strike"
+                            app:tint="@color/black"
 
-                    <androidx.recyclerview.widget.RecyclerView
+                            />
+                    </LinearLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/uploadedquizes"/>
+                        android:text="4"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+                        android:id="@+id/currentstrike"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Current Streak"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="6dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato"/>
+
                 </LinearLayout>
-            </HorizontalScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_yellow"
+                        android:backgroundTint="#FA0707"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/strike"
+                            app:tint="@color/black"
+
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/higheststrikerate"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Highest Streak"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="6dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -43,7 +43,7 @@ import Adaptors.RecentQuizesAdaptor;
 import Models.User;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView username,coins,rank,followers,bio,txt;
+    private TextView username,coins,rank,followers,bio,txt,higheststrikerate,currentstrike;
     private DatabaseReference database,requests;
     private String userid_current,userid;
     private RecyclerView recyclerView;
@@ -73,6 +73,8 @@ public class ProfileActivity extends AppCompatActivity {
         connect=findViewById(R.id.connectButton);
         arrayLists=new ArrayList<>();
         more=findViewById(R.id.more);
+        higheststrikerate=findViewById(R.id.higheststrikerate);
+        currentstrike=findViewById(R.id.currentstrike);
         img=findViewById(R.id.profileImage);
         backpr=findViewById(R.id.backpr);
         imageView=findViewById(R.id.fees);
@@ -550,8 +552,11 @@ public class ProfileActivity extends AppCompatActivity {
                             username.setText(user.getName());
                             coins.setText(String.valueOf(user.getCoin()));
                             rank.setText("#" + currentRank);
+                            higheststrikerate.setText(String.valueOf(user.getHigheststrike()));
+                            currentstrike.setText(String.valueOf(user.getCurrentstrike()));
                             bio.setText(user.getBio()==null || user.getBio()==""? "N/A":user.getBio());
                             String imageKey=user.getProfile();
+
                             if (!TextUtils.isEmpty(imageKey)) {
                                 int imageResId = getResources().getIdentifier(imageKey, "drawable", getPackageName());
                                 if (imageResId != 0) {
