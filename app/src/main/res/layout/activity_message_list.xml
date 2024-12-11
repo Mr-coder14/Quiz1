@@ -3,72 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="3dp"
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".MessageListActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/asd"
-        android:layout_margin="7dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="60dp"
+            android:background="@color/PrimaryColor">
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:tint="@color/white"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/backpr" />
 
-        <androidx.cardview.widget.CardView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Messages"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/lato"
+                android:textStyle="bold"
+                android:textSize="22sp" />
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search_icon"
+                android:background="@color/PrimaryColor"
+                android:layout_gravity="center"
+                app:tint="@color/white"
+                android:padding="5dp"
+                android:id="@+id/searchuser"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyluerviewchats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/white_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/tyu"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/search_icon" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/plus"
-                    android:textColorHint="@color/LightGray"
-                    android:background="@null"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:hint="Find Person"
-                    android:paddingStart="8dp" />
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_person_add_alt_1_24"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:id="@+id/searchuser"/>
-
+            android:layout_marginTop="10dp"
+             />
     </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progressbarchat"
@@ -83,13 +71,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyluerviewchats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/asd" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

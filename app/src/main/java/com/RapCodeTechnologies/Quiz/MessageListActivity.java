@@ -2,7 +2,7 @@ package com.RapCodeTechnologies.Quiz;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,16 +26,15 @@ import java.util.ArrayList;
 import Adaptors.ChatlistAdaptor;
 import Models.User;
 
-
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageButton imageButton;
     private ChatlistAdaptor adaptor;
     private DatabaseReference databaseReference,db1;
     private ProgressBar progressBar;
+    private ImageView backpr;
     private String userid;
     private ArrayList<User> userModels= new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class MessageListActivity extends AppCompatActivity {
         imageButton=findViewById(R.id.searchuser);
         recyclerView=findViewById(R.id.recyluerviewchats);
         progressBar=findViewById(R.id.progressbarchat);
+        backpr=findViewById(R.id.backpr);
         progressBar.setVisibility(View.VISIBLE);
         userid= FirebaseAuth.getInstance().getUid();
         db1=FirebaseDatabase.getInstance().getReference().child("users");
@@ -52,18 +53,20 @@ public class MessageListActivity extends AppCompatActivity {
         userdetials();
         adaptor = new ChatlistAdaptor(this, userModels,userid);
         recyclerView.setAdapter(adaptor);
+        backpr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MessageListActivity.this,Searchuseractivity.class));
-
             }
         });
-
-
     }
-
     private void userdetials() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

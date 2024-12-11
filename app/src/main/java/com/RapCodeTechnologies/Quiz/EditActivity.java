@@ -45,10 +45,16 @@ public class EditActivity extends AppCompatActivity {
     private String userid;
     private DatabaseReference databaseReference;
     private int[] imageResources = {
-            R.drawable.person3,
-            R.drawable.profile,
             R.drawable.unknownprofile,
-            R.drawable.edit
+            R.drawable.person3,
+            R.drawable.person1,
+            R.drawable.person2,
+            R.drawable.person4,
+            R.drawable.person5,
+            R.drawable.person6,
+            R.drawable.person7,
+            R.drawable.person8,
+            R.drawable.person9
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

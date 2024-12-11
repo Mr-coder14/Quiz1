@@ -57,7 +57,7 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             app:shapeAppearanceOverlay="@style/CircleImage"
-                            app:srcCompat="@drawable/profile" />
+                            app:srcCompat="@drawable/unknownprofile" />
 
                         <TextView
                             android:id="@+id/homeusername"
