@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               startActivity(new Intent(SettingsActivity.this,AboutUsActivity.class));
 
             }
         });
