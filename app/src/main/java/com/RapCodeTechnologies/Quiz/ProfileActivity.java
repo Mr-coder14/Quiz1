@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Models.User;
 
@@ -166,7 +170,12 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });
                 } else if (currentStatus.equals("UnBlock")) {
-                    handleUnblockUser();
+                    new AlertDialog.Builder(ProfileActivity.this)
+                            .setTitle("UnBlock User")
+                            .setMessage("Are you sure you want to UnBlock this user?")
+                            .setPositiveButton("Yes", (dialog, which) -> handleUnblockUser())
+                            .setNegativeButton("No", null)
+                            .show();
                 }
             }
         });
@@ -297,6 +306,72 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void handleReportUser() {
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setTitle("Report User");
+
+
+        View reportView = getLayoutInflater().inflate(R.layout.dialog_report_user, null);
+        RadioGroup reportReasons = reportView.findViewById(R.id.radioGroupReportReasons);
+
+        builder.setView(reportView);
+
+        builder.setPositiveButton("Submit Report", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                int selectedReasonId = reportReasons.getCheckedRadioButtonId();
+
+                if (selectedReasonId == -1) {
+                    // No reason selected
+                    Toast.makeText(ProfileActivity.this, "Please select a reason for reporting", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                RadioButton selectedReason = reportView.findViewById(selectedReasonId);
+                String reportReason = selectedReason.getText().toString();
+
+
+                submitReport(reportReason);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", null);
+
+        builder.create().show();
+    }
+
+    private void submitReport(String reportReason) {
+        // Get Firebase Database reference for reported users
+        DatabaseReference reportedUsersRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("reported_users")
+                .child(userid); // The ID of the user being reported
+
+        // Create a unique key for each report
+        String reportId = reportedUsersRef.push().getKey();
+
+        // Create a report object
+        if (reportId != null) {
+            // Create a map to store report details
+            Map<String, Object> reportDetails = new HashMap<>();
+            reportDetails.put("reported_by", userid_current); // ID of the user making the report
+            reportDetails.put("reason", reportReason);
+            reportDetails.put("timestamp", System.currentTimeMillis());
+
+            // Submit the report
+            reportedUsersRef.child(reportId).setValue(reportDetails)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ProfileActivity.this, "User reported successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ProfileActivity.this, "Failed to submit report", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 
     private void shareProfile() {
