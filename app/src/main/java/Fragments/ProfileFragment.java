@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -24,6 +27,8 @@ import com.RapCodeTechnologies.Quiz.EditActivity;
 import com.RapCodeTechnologies.Quiz.FollowersActivity;
 import com.RapCodeTechnologies.Quiz.LoginActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.RapCodeTechnologies.Quiz.Searchuseractivity;
+import com.RapCodeTechnologies.Quiz.SettingsActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,8 +53,9 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private ShapeableImageView img;
-    private ScrollView lo;
-    private LinearLayout edit, follews;
+    private ImageView search,settings;
+    private NestedScrollView lo;
+    private LinearLayout edit, follews,fe;
 
     private User user;
     private FirebaseUser us;
@@ -70,6 +76,9 @@ public class ProfileFragment extends Fragment {
         lo = view.findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+        fe=view.findViewById(R.id.fe);
+        search=view.findViewById(R.id.search);
+        settings=view.findViewById(R.id.settings);
         higheststrikerate=view.findViewById(R.id.higheststrikerate);
         currentstrike=view.findViewById(R.id.currentstrike);
         recyclerView = view.findViewById(R.id.recentquizes);
@@ -90,6 +99,20 @@ public class ProfileFragment extends Fragment {
         userinformation();
         fetchFollowersCount();
         fetchrecentquizzes();
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(), SettingsActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(), Searchuseractivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecentQuizesAdaptor adaptor = new RecentQuizesAdaptor(arrayLists, getContext());
@@ -120,6 +143,10 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 }
+                else {
+                    recyclerView.setVisibility(View.GONE);
+                    fe.setVisibility(View.VISIBLE);
+                }
                 isRecentQuizzesLoaded = true;
                 checkDataLoadCompletion();
             }
@@ -127,6 +154,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 isRecentQuizzesLoaded = true;
+                recyclerView.setVisibility(View.GONE);
+                fe.setVisibility(View.VISIBLE);
                 checkDataLoadCompletion();
             }
         });
