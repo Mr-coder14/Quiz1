@@ -194,6 +194,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
                                 android:text="C++"
+                                android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -227,6 +228,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/lato"
                                 android:text="Python"
+                                android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -266,6 +268,7 @@
                                 android:layout_weight="1"
                                 android:text="Web Development"
                                 android:fontFamily="@font/lato"
+                                android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -299,6 +302,7 @@
                                 android:fontFamily="@font/lato"
                                 android:text="Android Development"
                                 android:textColor="@color/black"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>

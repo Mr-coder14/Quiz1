@@ -217,8 +217,8 @@ public class ResultFragment extends Fragment {
         String quizdsId = getArguments().getString(quizId);
         DatabaseReference recentQuizzesRef = FirebaseDatabase.getInstance()
                 .getReference("recent_quizzes")
-                .child(quizdsId)
-                .child(userId);
+                .child(userId)
+                .child(quizdsId);
 
         recentQuizzesRef.setValue(true);
     }

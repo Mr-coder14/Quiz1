@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,13 +39,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Adaptors.RecentQuizesAdaptor;
 import Models.User;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView username,coins,rank,followers,bio,txt;
     private DatabaseReference database,requests;
     private String userid_current,userid;
+    private RecyclerView recyclerView;
     private FirebaseAuth auth;
+    private ArrayList<String > arrayLists;
     private ProgressBar progressBar;
     private ScrollView lo;
     private LinearLayout message,connect;
@@ -52,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     private User user,currentuser;
     private ShapeableImageView img;
     private boolean isRequestSent = false;
-    private DatabaseReference followersRef;
+    private DatabaseReference followersRef,recent;
     private FirebaseUser us;
 
     @Override
@@ -64,7 +69,9 @@ public class ProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarprofile);
         lo=findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
+        recyclerView=findViewById(R.id.recentquizes);
         connect=findViewById(R.id.connectButton);
+        arrayLists=new ArrayList<>();
         more=findViewById(R.id.more);
         img=findViewById(R.id.profileImage);
         backpr=findViewById(R.id.backpr);
@@ -82,9 +89,14 @@ public class ProfileActivity extends AppCompatActivity {
         userid=getIntent().getStringExtra("userid");
         requests=FirebaseDatabase.getInstance().getReference().child("requests").child(userid).child(userid_current);
         followersRef = FirebaseDatabase.getInstance().getReference().child("followers").child(userid).child(userid_current);
+        recent=FirebaseDatabase.getInstance().getReference().child("recent_quizzes").child(userid);
         findViewById(R.id.fees).setVisibility(View.VISIBLE);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.baseline_person_add_alt_1_24));
         checkIfBlocked();
+        fetchrecentquizzes();
+        RecentQuizesAdaptor adaptor=new RecentQuizesAdaptor(arrayLists,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adaptor);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,6 +208,27 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void fetchrecentquizzes() {
+        recent.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                        if(dataSnapshot.getKey()!=null){
+                            arrayLists.add(dataSnapshot.getKey());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void checkIfBlocked() {
         DatabaseReference blockedUsersRef = FirebaseDatabase.getInstance()
                 .getReference()
