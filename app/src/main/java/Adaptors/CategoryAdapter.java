@@ -38,6 +38,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.categories = categories;
         this.currentUserId = FirebaseAuth.getInstance().getUid();
     }
+    public void updateList(ArrayList<String> newList) {
+        this.categories = newList; // Update the adapter's data
+        notifyDataSetChanged(); // Notify the adapter about the data change
+    }
 
     @NonNull
     @Override

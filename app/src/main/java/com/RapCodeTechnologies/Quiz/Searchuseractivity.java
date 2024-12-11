@@ -53,8 +53,6 @@ public class Searchuseractivity extends AppCompatActivity {
         progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
 
-
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,6 +32,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_bg"
+                android:padding="3dp"
+                android:gravity="center"
+                android:elevation="8dp">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:id="@+id/search"
+                    android:hint="Search Quizzes.."
+                    android:textColor="@color/black"
+                    android:background="@null"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/LightGray"
+                    android:fontFamily="@font/plus"
+                    android:textSize="17sp"
+                    />
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/search_icon"/>
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
