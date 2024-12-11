@@ -41,13 +41,13 @@
                 android:elevation="8dp">
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:lines="1"
                     android:id="@+id/search"
                     android:hint="Search Quizzes.."
                     android:textColor="@color/black"
                     android:background="@null"
-                    android:layout_margin="10dp"
+                    android:layout_margin="1dp"
                     android:layout_weight="1"
                     android:textColorHint="@color/LightGray"
                     android:fontFamily="@font/plus"

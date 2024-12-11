@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,8 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ArrayList<String > arrayLists;
     private ProgressBar progressBar;
-    private ScrollView lo;
-    private LinearLayout message,connect;
+    private NestedScrollView lo;
+    private LinearLayout message,connect,g;
     private ImageView imageView,backpr,more;
     private LinearLayout layout;
     private User user,currentuser;
@@ -72,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recentquizes);
         connect=findViewById(R.id.connectButton);
         arrayLists=new ArrayList<>();
+        g=findViewById(R.id.fe);
         more=findViewById(R.id.more);
         higheststrikerate=findViewById(R.id.higheststrikerate);
         currentstrike=findViewById(R.id.currentstrike);
@@ -95,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
         findViewById(R.id.fees).setVisibility(View.VISIBLE);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.baseline_person_add_alt_1_24));
         checkIfBlocked();
-        fetchrecentquizzes();
+        userinformation();
         RecentQuizesAdaptor adaptor=new RecentQuizesAdaptor(arrayLists,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adaptor);
@@ -210,6 +212,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+    private void finalizeUI() {
+        progressBar.setVisibility(View.GONE);
+        lo.setVisibility(View.VISIBLE);
+
+        // Update RecyclerView adapter
+        RecentQuizesAdaptor adaptor = new RecentQuizesAdaptor(arrayLists, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adaptor);
+    }
 
     private void fetchrecentquizzes() {
         recent.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -222,10 +233,18 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                 }
+                else {
+                    recyclerView.setVisibility(View.GONE);
+                    g.setVisibility(View.VISIBLE);
+                }
+                fetchFollowersCount();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                fetchFollowersCount();
+                recyclerView.setVisibility(View.GONE);
+                g.setVisibility(View.VISIBLE);
 
             }
         });
@@ -449,11 +468,13 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     followers.setText("0");
                 }
+                finalizeUI();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 followers.setText("0");
+                finalizeUI();
             }
         });
     }
@@ -578,11 +599,9 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
 
-                    progressBar.setVisibility(View.GONE);
-                    lo.setVisibility(View.VISIBLE);
+                    fetchrecentquizzes();
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    lo.setVisibility(View.VISIBLE);
                     Toast.makeText(ProfileActivity.this, "No users found", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -590,7 +609,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressBar.setVisibility(View.GONE);
-                lo.setVisibility(View.VISIBLE);
                 Toast.makeText(ProfileActivity.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
             }
         });
