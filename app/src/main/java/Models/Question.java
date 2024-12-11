@@ -82,7 +82,7 @@ public class Question implements Parcelable {
         this.questionIndex=questionIndex;
     }
 
-    // Parcelable implementation
+
     protected Question(Parcel in) {
         question = in.readString();
         optionA = in.readString();

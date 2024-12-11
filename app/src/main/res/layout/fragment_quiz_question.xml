@@ -35,7 +35,7 @@
                 android:id="@+id/questionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:paddingBottom="16dp"
                 android:text="What is Interface in java Programming is it a function?"
                 android:textSize="22sp"
@@ -48,12 +48,19 @@
                 android:fontFamily="@font/librebaskervillebold"
                 android:gravity="start" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageviewques"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/white_box" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/technology"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/PrimaryColor"
+                app:strokeWidth="2dp"
+                app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
             <LinearLayout
                 android:layout_width="match_parent"

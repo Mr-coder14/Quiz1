@@ -86,6 +86,7 @@ public class QuizLevelActivity extends AppCompatActivity {
                     if(!questions.isEmpty()){
                         Intent intent = new Intent(QuizLevelActivity.this, QuizActivity.class);
                         intent.putParcelableArrayListExtra("questions", questions);
+                        intent.putExtra("title",category_name);
                         startActivity(intent);
                     }
 

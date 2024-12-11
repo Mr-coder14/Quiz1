@@ -127,8 +127,8 @@ public class QuizQuestionFragment extends Fragment {
 
         Glide.with(this)
                 .load(query)
-                .placeholder(R.drawable.baseline_access_alarms_24)
-                .error(R.drawable.baseline_access_alarms_24)
+                .placeholder(R.drawable.programming)
+                .error(R.drawable.technology)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

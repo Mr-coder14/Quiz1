@@ -24,15 +24,15 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:textStyle="bold"
-                android:lines="1"
+                android:lines="2"
                 android:layout_weight="1"
-                android:text="Programming"
+                android:text="Web Development!"
                 android:gravity="center"
                 android:fontFamily="@font/lato"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:textSize="22.5sp" />
+                android:textSize="21sp" />
 
             <TextView
                 android:id="@+id/discountTextView"
@@ -71,10 +71,10 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/cat1"
+                android:src="@drawable/androoid"
                 android:layout_gravity="center"
                 android:id="@+id/bannerImageView"
-                app:tint="@color/black" />
+                 />
 
         </LinearLayout>
 

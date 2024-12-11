@@ -49,7 +49,8 @@ public class QuizActivity extends AppCompatActivity {
         progressBar1=findViewById(R.id.progressbaroverall);
         imageButton=findViewById(R.id.backquiz);
         progressBar1.setVisibility(View.VISIBLE);
-        title=quiztitle.getText().toString();
+        title=getIntent().getStringExtra("title");
+        quiztitle.setText(title);
         questionList=getIntent().getParcelableArrayListExtra("questions");
         if (questionList == null || questionList.isEmpty()) {
             // Handle empty or null question list

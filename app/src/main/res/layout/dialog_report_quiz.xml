@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- RadioGroup for report reasons -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/reason1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inappropriate Content" />
+
+        <RadioButton
+            android:id="@+id/reason2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incorrect Information" />
+
+        <RadioButton
+            android:id="@+id/reason3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spam or Advertising" />
+
+        <RadioButton
+            android:id="@+id/reason4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+    </RadioGroup>
+
+    <!-- Additional input for custom message -->
+    <EditText
+        android:id="@+id/additionalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Additional information (optional)"
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        android:lines="3"
+        android:background="@android:drawable/editbox_background" />
+</LinearLayout>

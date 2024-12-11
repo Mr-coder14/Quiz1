@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.RapCodeTechnologies.Quiz.AllQuizActivity;
 import com.RapCodeTechnologies.Quiz.MessageListActivity;
 import com.RapCodeTechnologies.Quiz.QuizActivity;
+import com.RapCodeTechnologies.Quiz.QuizLevelActivity;
 import com.RapCodeTechnologies.Quiz.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +42,7 @@ import Models.User;
 
 public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClickListener {
     private TextView layout;
-    private LinearLayout imageView;
+    private LinearLayout imageView,cpp,py,web,app;
     private TextView username,coinhome,seeallquizzes;
     private ShapeableImageView shapeableImageView;
     private ViewPager2  bannerViewPager;
@@ -71,6 +72,10 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         progressBar=view.findViewById(R.id.progressbarhome);
         messageCountBadge = view.findViewById(R.id.messagecounttoatal);
         shapeableImageView=view.findViewById(R.id.imageView3);
+        cpp=view.findViewById(R.id.cpp);
+        web=view.findViewById(R.id.web_dev);
+        py=view.findViewById(R.id.python);
+        app=view.findViewById(R.id.app_dev);
         seeallquizzes=view.findViewById(R.id.seeallquizzes);
         dlayout=view.findViewById(R.id.homeee);
         progressBar.setVisibility(View.VISIBLE);
@@ -80,6 +85,31 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         userid= FirebaseAuth.getInstance().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users").child(userid);
         chatsReference = FirebaseDatabase.getInstance().getReference().child("chatss").child(userid);
+
+        app.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openquiz("Android Development");
+            }
+        });
+        web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openquiz("Web Development");
+            }
+        });
+        cpp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openquiz("C++ ");
+            }
+        });
+        py.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openquiz("Python");
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +125,7 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), QuizActivity.class));
+                startActivity(new Intent(getContext(), AllQuizActivity.class));
             }
         });
         loadBanners();
@@ -103,6 +133,13 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
         fetchTotalMessageCount();
         return view;
     }
+
+    private void openquiz(String name) {
+        Intent intent=new Intent(getContext(), QuizLevelActivity.class);
+        intent.putExtra("name",name);
+        getActivity().startActivity(intent);
+    }
+
     private void fetchTotalMessageCount() {
         chatsReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -143,11 +180,11 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
     }
     private void loadBanners() {
         List<BannerItem> banners = new ArrayList<>();
-        banners.add(new BannerItem("Combo Offer!", "Blue Pen-3,Black-1", "Buy Now", Color.parseColor("#FFE4E1"), R.drawable.cat1));
-        banners.add(new BannerItem("Combo Offer!", "Tip Pencil,Box,Scale,Eraser", "Shop Now", Color.parseColor("#E1F5FE"), R.drawable.cat2));
-        banners.add(new BannerItem("Drafter Combo!", "Drafter,A3 Note", "Get Now", Color.parseColor("#f0df60"), R.drawable.cat3));
-        banners.add(new BannerItem("Order Book!","Order your Favourite Book now!","Get Book",Color.parseColor("#FFE4E1"),R.drawable.cat4));
-        banners.add(new BannerItem("Order products!","Get the Products for Projects!","Get Products",Color.parseColor("#E1F5FE"),R.drawable.technology));
+        banners.add(new BannerItem("Web Development!", "Attend Quiz!!", "Earn Coins!", Color.parseColor("#FFE4E1"), R.drawable.webb));
+        banners.add(new BannerItem("Android Development", "Attend Quiz!!", "Earn Coins!", Color.parseColor("#E1F5FE"), R.drawable.androoid));
+        banners.add(new BannerItem("Java", "Attend Quiz!!", "Earn Coins!", Color.parseColor("#f0df60"), R.drawable.java));
+        banners.add(new BannerItem("C Programming","Attend Quiz!!","Earn Coins!",Color.parseColor("#FFE4E1"),R.drawable.cprogramming));
+        banners.add(new BannerItem("Php Programming","Attend Quiz!!","Earn Coins!",Color.parseColor("#E1F5FE"),R.drawable.phpp));
 
 
         BannerAdapter bannerAdapter = new BannerAdapter(banners, this);
@@ -217,24 +254,37 @@ public class HomeFragment extends Fragment implements BannerAdapter.OnBannerClic
     @Override
     public void onBannerClick(BannerItem bannerItem) {
         Intent intent=null;
-        switch (bannerItem.getButtonText()) {
-            case "Buy Now":
-//                intent = new Intent(getActivity(), ComboOfferpen.class);
+        switch (bannerItem.getTitle()) {
+            case "Php Programming":
+                intent=new Intent(getContext(), QuizLevelActivity.class);
+                intent.putExtra("name","Php Programming");
                 break;
-            case "Shop Now":
-//                intent = new Intent(getActivity(), Combopencil.class);
+            case "C Programming":
+                intent=new Intent(getContext(), QuizLevelActivity.class);
+                intent.putExtra("name","C Programming");
+
                 break;
-            case "Get Book":
-//                intent=new Intent(getActivity(), BookFormApplication.class);
+            case "Java":
+                intent=new Intent(getContext(), QuizLevelActivity.class);
+                intent.putExtra("name","Java");
+
                 break;
-            case "Get Products":
-//                intent=new Intent(getActivity(), Projectproductsfrormapplication.class);
+            case "Android Development":
+                 intent=new Intent(getContext(), QuizLevelActivity.class);
+                intent.putExtra("name","Android Development");
+
                 break;
             default:
-//                intent = new Intent(getActivity(), ComboDrafter.class);
+
+                intent=new Intent(getContext(), QuizLevelActivity.class);
+                intent.putExtra("name","Web Development");
                 break;
+
         }
-        startActivity(intent);
+        if(intent!=null){
+            getActivity().startActivity(intent);
+        }
+
 
     }
 }
