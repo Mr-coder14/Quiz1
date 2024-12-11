@@ -40,7 +40,7 @@ import Adaptors.RecentQuizesAdaptor;
 import Models.User;
 
 public class ProfileFragment extends Fragment {
-    private TextView username, coins, rank, followers, bio;
+    private TextView username, coins, rank, followers, bio,higheststrikerate,currentstrike;
     private DatabaseReference database, recent;
     private String userid;
     private FirebaseAuth auth;
@@ -70,6 +70,8 @@ public class ProfileFragment extends Fragment {
         lo = view.findViewById(R.id.lo);
         lo.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+        higheststrikerate=view.findViewById(R.id.higheststrikerate);
+        currentstrike=view.findViewById(R.id.currentstrike);
         recyclerView = view.findViewById(R.id.recentquizes);
         arrayLists = new ArrayList<>();
         bio = view.findViewById(R.id.userBio);
@@ -195,6 +197,8 @@ public class ProfileFragment extends Fragment {
                             username.setText(user.getName());
                             bio.setText(user.getBio());
                             rank.setText("#" + currentRank);
+                            higheststrikerate.setText(String.valueOf(user.getHigheststrike()));
+                            currentstrike.setText(String.valueOf(user.getCurrentstrike()));
                             if (!isAdded()) {
                                 return;
                             }
@@ -215,6 +219,8 @@ public class ProfileFragment extends Fragment {
                         rank.setText("N/A");
                         coins.setText("0");
                         username.setText("Unknown");
+                        higheststrikerate.setText("0");
+                        currentstrike.setText("0");
                     }
                 }
                 isUserInfoLoaded = true;

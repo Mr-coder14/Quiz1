@@ -166,39 +166,54 @@ public class ResultFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-
                     String name = dataSnapshot.child("name").getValue(String.class);
-
                     Integer currentCoins = dataSnapshot.child("coin").getValue(Integer.class);
                     Boolean added = dataSnapshot.child("coinsAddedForQuiz").getValue(Boolean.class);
+                    Long lastQuizDateMillis = dataSnapshot.child("lastQuizDate").getValue(Long.class);
+                    Integer currentStreak = dataSnapshot.child("currentstrike").getValue(Integer.class);
+                    Integer highestStreak = dataSnapshot.child("higheststrike").getValue(Integer.class);
 
-                    if (currentCoins == null) {
-                        currentCoins = 0;
-                    }
-                    if(added==null){
-                        added=false;
-                    }
-                    else {
-                        added=true;
-                    }
+                    if (currentCoins == null) currentCoins = 0;
+                    if (added == null) added = false;
+                    if (lastQuizDateMillis == null) lastQuizDateMillis = 0L;
+                    if (currentStreak == null) currentStreak = 0;
+                    if (highestStreak == null) highestStreak = 0;
+
                     if (!added) {
                         int finalCoins = currentCoins + coins;
                         databaseReference.child("coin").setValue(finalCoins);
-                        added = true;
                         databaseReference.child("coinsAddedForQuiz").setValue(true);
                     }
+
+                    // Streak Logic
+                    long currentDateMillis = System.currentTimeMillis();
+                    boolean isConsecutiveDay = isSameDay(currentDateMillis, lastQuizDateMillis + 24 * 60 * 60 * 1000);
+                    boolean isToday = isSameDay(currentDateMillis, lastQuizDateMillis);
+
+                    if (!isToday) { // Avoid double-counting for the same day
+                        if (isConsecutiveDay) {
+                            currentStreak++;
+                        } else {
+                            currentStreak = 1;
+                        }
+                        if (currentStreak > highestStreak) {
+                            highestStreak = currentStreak;
+                        }
+
+                        // Update streak and last quiz date in database
+                        databaseReference.child("currentstrike").setValue(currentStreak);
+                        databaseReference.child("higheststrike").setValue(highestStreak);
+                        databaseReference.child("lastQuizDate").setValue(currentDateMillis);
+                    }
+
                     eranedcoin.setText("You Earned " + coins + " Coins!!");
                     resultCoinTextView.setText(String.valueOf(currentCoins));
                     addingcoin.setText(" + " + coins);
-
                     resultUsername.setText(name);
-
 
                     saveRecentQuiz(userId);
                     loadingProgressBar.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
-
-
                 } else {
                     Toast.makeText(getContext(), "User not found!", Toast.LENGTH_SHORT).show();
                 }
@@ -212,6 +227,17 @@ public class ResultFragment extends Fragment {
             }
         });
     }
+
+    private boolean isSameDay(long date1Millis, long date2Millis) {
+        java.util.Calendar cal1 = java.util.Calendar.getInstance();
+        java.util.Calendar cal2 = java.util.Calendar.getInstance();
+        cal1.setTimeInMillis(date1Millis);
+        cal2.setTimeInMillis(date2Millis);
+
+        return cal1.get(java.util.Calendar.YEAR) == cal2.get(java.util.Calendar.YEAR) &&
+                cal1.get(java.util.Calendar.DAY_OF_YEAR) == cal2.get(java.util.Calendar.DAY_OF_YEAR);
+    }
+
 
     private void saveRecentQuiz(String userId) {
         String quizdsId = getArguments().getString(quizId);
