@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,7 @@ import Fragments.ResultFragment;
 import Models.Question;
 
 public class QuizActivity extends AppCompatActivity {
-    private DatabaseReference quizDatabase;
-    private List<Question> questionList = new ArrayList<>();
+    private ArrayList<Question> questionList = new ArrayList<>();
     private CountDownTimer countDownTimer;
     private static final int QUESTION_TIME = 30000;
     private static final int TIMER_INTERVAL = 1000;
@@ -48,10 +48,16 @@ public class QuizActivity extends AppCompatActivity {
         userid= FirebaseAuth.getInstance().getUid();
         progressBar1=findViewById(R.id.progressbaroverall);
         imageButton=findViewById(R.id.backquiz);
-        quizDatabase = FirebaseDatabase.getInstance().getReference("quiz_questions");
         progressBar1.setVisibility(View.VISIBLE);
         title=quiztitle.getText().toString();
-        loadQuestionsFromFirebase();
+        questionList=getIntent().getParcelableArrayListExtra("questions");
+        if (questionList == null || questionList.isEmpty()) {
+            // Handle empty or null question list
+            Toast.makeText(this, "No Questions Found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+      loadQuestionsFromFirebase();
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,24 +68,10 @@ public class QuizActivity extends AppCompatActivity {
 
         }
     private void loadQuestionsFromFirebase() {
-        quizDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Question question = snapshot.getValue(Question.class);
-                    questionList.add(question);
-                }
                 if (!questionList.isEmpty()) {
                     progressBar1.setVisibility(View.GONE);
                     loadNextQuestion();
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
     @Override
     protected void onDestroy() {
@@ -104,27 +96,27 @@ public class QuizActivity extends AppCompatActivity {
                     question.getQuestionIndex()
             );
 
-            // Listener for image loading completion
+
             fragment.setOnImageLoadListener(() -> {
                 fragment.setOnCorrectAnswerListener(() -> score++);
 
-                // Update progress bar and question count AFTER image is loaded
+
                 quizprogress.setProgress((currentQuestionIndex) * 100 / questionList.size());
                 questionCount.setText((currentQuestionIndex ) + "/" + questionList.size());
 
 
-                // Start the timer after the question is loaded
+
                 startTimer();
             });
 
-            // Replace the fragment
+
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainerquiz, fragment);
             transaction.commit();
 
             currentQuestionIndex++;
         } else {
-            // Show result when no more questions are left
+
             showResultFragment();
         }
     }
@@ -134,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
 
-        // Reset and start the timer
+
         countDownTimer = new CountDownTimer(QUESTION_TIME, TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {

@@ -1,27 +1,28 @@
 package Adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.RapCodeTechnologies.Quiz.QuizLevelActivity;
 import com.RapCodeTechnologies.Quiz.R;
 
-import java.util.List;
-
-import Models.QuizCategory;
+import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private Context context;
-    private List<QuizCategory> categories;
+    private ArrayList<String> categories;
 
-    public CategoryAdapter(Context context, List<QuizCategory> categories) {
+    public CategoryAdapter(Context context, ArrayList<String> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -35,9 +36,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        QuizCategory category = categories.get(position);
-        holder.categoryText.setText(category.getName());
-        holder.categoryImage.setImageResource(category.getImageResId());
+        String categoryName = categories.get(position);
+        holder.bind(categoryName);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, QuizLevelActivity.class);
+                intent.putExtra("name",categoryName);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,6 +61,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             categoryImage = itemView.findViewById(R.id.categoryImage);
             categoryText = itemView.findViewById(R.id.categoryText);
+        }
+
+        public void bind(String categoryName) {
+            categoryText.setText(categoryName);
+            categoryImage.setImageResource(R.drawable.person3);
         }
     }
 }
