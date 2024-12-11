@@ -1,6 +1,12 @@
 package com.RapCodeTechnologies.Quiz;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -45,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         password = findViewById(R.id.passwordregister);
         repassword = findViewById(R.id.repasswordregister);
-        checkboxTerms=findViewById(R.id.checkbox_age);
+        checkboxTerms=findViewById(R.id.checkbox_terms);
         checkboxAge=findViewById(R.id.checkbox_age);
         email = findViewById(R.id.emailregister);
         progressDialog = new ProgressDialog(this);
@@ -53,6 +59,40 @@ public class RegisterActivity extends AppCompatActivity {
         register = findViewById(R.id.registerrbtn);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         auth = FirebaseAuth.getInstance();
+        String fullText = "I accept the Terms and Conditions & Privacy Policy. The Privacy Policy explains how we handle your data securely and ensure your information's confidentiality.";
+        SpannableString spannable = new SpannableString(fullText);
+
+
+        int termsStart = fullText.indexOf("Terms and Conditions");
+        int termsEnd = termsStart + "Terms and Conditions".length();
+        int policyStart = fullText.indexOf("Privacy Policy");
+        int policyEnd = policyStart + "Privacy Policy".length();
+
+
+        ClickableSpan termsClick = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/quizfest-termsandconditions/home"));
+                startActivity(browserIntent);
+
+            }
+        };
+        spannable.setSpan(termsClick, termsStart, termsEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.PrimaryColor)), termsStart, termsEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        ClickableSpan policyClick = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                // Handle Privacy Policy link click
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/quizfest-privacypolicy/home"));
+                startActivity(browserIntent);
+            }
+        };
+        spannable.setSpan(policyClick, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.PrimaryColor)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        checkboxTerms.setText(spannable);
+        checkboxTerms.setMovementMethod(LinkMovementMethod.getInstance());
         register.setOnClickListener(v -> {
             if (!checkboxTerms.isChecked()  || !checkboxAge.isChecked()) {
                 StringBuilder message = new StringBuilder("Please agree to:");
