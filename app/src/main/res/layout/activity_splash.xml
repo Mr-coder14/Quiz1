@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/PrimaryColor"
+    android:background="@color/white"
     tools:context=".SplashActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,16 +21,21 @@
             android:layout_height="wrap_content"
             android:text="Welcome To the "
             android:textSize="42sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:gravity="center"
             android:fontFamily="@font/lato"
             />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="320dp"
+            android:src="@drawable/quizfestlogo512"
+            android:layout_marginTop="30dp"/>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            app:lottie_rawRes="@raw/quizanimation"
-            />
+<!--        <com.airbnb.lottie.LottieAnimationView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="330dp"-->
+<!--            app:lottie_rawRes="@raw/quizanimation"-->
+<!--            />-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
