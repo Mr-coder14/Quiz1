@@ -20,7 +20,7 @@ public class ContactUsActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back);
         contactUsContent = findViewById(R.id.contact_us_content);
 
-        // Set the content for the Contact Us page
+
         contactUsContent.setText(
                 "We’d love to hear from you!\n\n" +
                         "At QuizFest, we value our users and are always here to assist you. Whether you have questions, suggestions, or feedback about the app, feel free to get in touch with us.\n\n" +
@@ -37,7 +37,7 @@ public class ContactUsActivity extends AppCompatActivity {
                         "Stay curious and keep quizzing! 🎉"
         );
 
-        // Back button functionality
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
