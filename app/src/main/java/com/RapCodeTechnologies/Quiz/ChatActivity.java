@@ -135,22 +135,30 @@ public class ChatActivity extends AppCompatActivity {
                     MessageModel message = new MessageModel(messageText, senderUid, System.currentTimeMillis());
                     txt.setText("");
 
+                    // Save the message in sender's chat room
                     reference.child(reference.push().getKey()).setValue(message);
+
+                    // Save the message in receiver's chat room
                     FirebaseDatabase.getInstance().getReference().child("chatsRooms").child(receiverRoom)
                             .child(reference.push().getKey()).setValue(message);
 
-                    User userModel1 = new User(userModel.getName(), receiverUid);
-                    chatrefrence.child(FirebaseAuth.getInstance().getUid()).child(receiverUid).setValue(userModel1);
+                    // Add the sender to the receiver's chat list
+                    User senderUser = new User(); // Create a new User object for the sender
+                    senderUser.setUserid(senderUid);
+                    senderUser.setName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()); // Set sender's name
+                    chatrefrence.child(receiverUid).child(senderUid).setValue(senderUser);
 
+                    // Add the receiver to the sender's chat list
+                    chatrefrence.child(senderUid).child(receiverUid).setValue(userModel);
 
+                    // Update the message count for the receiver if they are inactive
                     FirebaseDatabase.getInstance().getReference().child("activeUsers").child(receiverUid)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     boolean isActive = snapshot.exists() && snapshot.getValue(Boolean.class);
                                     if (!isActive) {
-
-                                        chatrefrence.child(receiverUid).child(FirebaseAuth.getInstance().getUid())
+                                        chatrefrence.child(receiverUid).child(senderUid)
                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -161,7 +169,7 @@ public class ChatActivity extends AppCompatActivity {
                                                             }
                                                             int newCount = currentCount + 1;
                                                             DatabaseReference countRef = chatrefrence.child(receiverUid)
-                                                                    .child(FirebaseAuth.getInstance().getUid()).child("messagecount");
+                                                                    .child(senderUid).child("messagecount");
                                                             countRef.setValue(newCount);
                                                         }
                                                     }
@@ -180,6 +188,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
     }

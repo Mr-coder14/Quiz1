@@ -144,7 +144,7 @@ public class ChatlistAdaptor extends RecyclerView.Adapter<ChatlistAdaptor.ViewHo
 
         }
         public void bind(User userModel){
-            name.setText(userModel.getName());
+           name.setText(userModel.getName());
             if(String.valueOf(userModel.getMessagecount())!=null && userModel.getMessagecount()!=0){
                 l.setVisibility(View.VISIBLE);
                 messagecount.setText(String.valueOf(userModel.getMessagecount()));
@@ -158,6 +158,7 @@ public class ChatlistAdaptor extends RecyclerView.Adapter<ChatlistAdaptor.ViewHo
                         User u=snapshot.getValue(User.class);
                         String imageKey = u.getProfile();
                         if (!TextUtils.isEmpty(imageKey)) {
+//                            name.setText(u.getName());
                             int imageResId = context.getResources().getIdentifier(imageKey, "drawable", context.getPackageName());
                             if (imageResId != 0) {
                                 imageView.setImageResource(imageResId);

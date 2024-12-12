@@ -51,13 +51,14 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ArrayList<String > arrayLists;
     private ProgressBar progressBar;
+    private boolean isDataLoaded = false;
     private NestedScrollView lo;
     private LinearLayout message,connect,g;
     private ImageView imageView,backpr,more;
     private LinearLayout layout;
     private User user,currentuser;
     private ShapeableImageView img;
-    private boolean isRequestSent = false;
+
     private DatabaseReference followersRef,recent;
     private FirebaseUser us;
 
@@ -96,8 +97,10 @@ public class ProfileActivity extends AppCompatActivity {
         recent=FirebaseDatabase.getInstance().getReference().child("recent_quizzes").child(userid);
         findViewById(R.id.fees).setVisibility(View.VISIBLE);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.baseline_person_add_alt_1_24));
-        checkIfBlocked();
-        userinformation();
+//        checkIfBlocked();
+//        userinformation();
+
+        fetchDataAndInitialize();
         RecentQuizesAdaptor adaptor=new RecentQuizesAdaptor(arrayLists,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adaptor);
@@ -611,8 +614,21 @@ public class ProfileActivity extends AppCompatActivity {
         currentuserinfo();
         checkisfollowed();
         fetchFollowersCount();
-        lo.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
+
+
+        progressBar.setVisibility(View.VISIBLE);
+        lo.setVisibility(View.GONE);
+
+
+        isDataLoaded = true;
+        updateVisibility();
+    }
+
+    private void updateVisibility() {
+        if (isDataLoaded) {
+            progressBar.setVisibility(View.GONE);
+            lo.setVisibility(View.VISIBLE);
+        }
     }
     private void handleUnblockUser() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()

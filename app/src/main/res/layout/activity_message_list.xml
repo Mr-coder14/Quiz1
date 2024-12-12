@@ -48,6 +48,7 @@
                 app:tint="@color/white"
                 android:padding="5dp"
                 android:id="@+id/searchuser"/>
+
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyluerviewchats"
