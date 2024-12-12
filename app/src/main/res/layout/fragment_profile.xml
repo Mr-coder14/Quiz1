@@ -362,8 +362,8 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:padding="8dp"
                             android:background="@drawable/bg_yellow"
                             >
@@ -394,7 +394,7 @@
                             android:text="Current Streak"
                             android:layout_gravity="center"
                             android:layout_marginTop="6dp"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textColor="@color/black"
                             android:gravity="center"
                             android:fontFamily="@font/lato"/>
@@ -407,8 +407,8 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:padding="8dp"
                             android:background="@drawable/bg_yellow"
                             android:backgroundTint="#FA0707"
@@ -440,7 +440,7 @@
                             android:text="Highest Streak"
                             android:layout_gravity="center"
                             android:layout_marginTop="6dp"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textColor="@color/black"
                             android:gravity="center"
                             android:fontFamily="@font/lato"/>

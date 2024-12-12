@@ -321,10 +321,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
 
-            if(id== R.id.action_share) {
-                shareProfile();
-                return true;
-            }
+
             return false;
         });
 
@@ -428,13 +425,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void shareProfile() {
-        String shareMessage = "Check out this profile on QuizApp: " + user.getName();
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-        startActivity(Intent.createChooser(shareIntent, "Share Profile Using"));
-    }
+
 
     private void updateImageViewBasedOnText() {
         String text = txt.getText().toString();

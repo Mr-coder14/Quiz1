@@ -18,13 +18,14 @@ public class User implements Parcelable {
     public User() {
     }
 
-    public User(String name, String email, String userid, int coin, String bio,int currentstrike,int higheststrike) {
+    public User(String name, String email, String userid, int coin, String bio,int currentstrike,int higheststrike,String profile) {
         this.name = name;
         this.email = email;
         this.userid = userid;
         this.coin = coin;
         this.higheststrike=higheststrike;
         this.currentstrike=currentstrike;
+        this.profile=profile;
         this.bio = bio;
     }
 

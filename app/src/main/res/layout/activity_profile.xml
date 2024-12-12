@@ -94,7 +94,7 @@
                     android:layout_width="137dp"
                     android:layout_height="137dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/person3"
+                    android:src="@drawable/unknownprofile"
                     app:shapeAppearanceOverlay="@style/CircleImage"
                     app:strokeColor="@color/gray"
                     app:strokeWidth="3dp"

@@ -1,5 +1,7 @@
 package Fragments;
 
+import static com.google.common.reflect.Reflection.getPackageName;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,15 +218,17 @@ public class LeaderFragment extends Fragment {
                         String name = userSnapshot.child("name").getValue(String.class);
                         String userId = userSnapshot.child("userid").getValue(String.class);
                         int coin = userSnapshot.child("coin").getValue(Integer.class);
+                        String profile=userSnapshot.child("profile").getValue(String.class);
 
-                        allUsers.add(new LeaderBoard(name, userId, coin, 0));
+                        allUsers.add(new LeaderBoard(name, userId, coin, 0,profile));
                     }
 
                     // Add current user to friends list
                     DataSnapshot currentUserSnapshot = snapshot.child(userid);
                     String name = currentUserSnapshot.child("name").getValue(String.class);
                     int coin = currentUserSnapshot.child("coin").getValue(Integer.class);
-                    allUsers.add(new LeaderBoard(name, userid, coin, 0));
+                    String profile=currentUserSnapshot.child("profile").getValue(String.class);
+                    allUsers.add(new LeaderBoard(name, userid, coin, 0,profile));
 
                     // Sort friends by coins
                     allUsers.sort((user1, user2) -> Integer.compare(user2.getCoin(), user1.getCoin()));
@@ -267,7 +272,17 @@ public class LeaderFragment extends Fragment {
             LeaderBoard first = allUsers.get(0);
             firstplacename.setText(first.getUsername());
             firplacecoin.setText(String.valueOf(first.getCoin()));
-            firstplace.setVisibility(View.VISIBLE);
+            String imageKey = first.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = getResources().getIdentifier(imageKey, "drawable", getContext().getPackageName());
+                if (imageResId != 0) {
+                    firstpalceimg.setImageResource(imageResId);
+                } else {
+                    firstpalceimg.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                firstpalceimg.setImageResource(R.drawable.unknownprofile);
+            }
         } else {
             firstplace.setVisibility(View.GONE);
         }
@@ -276,6 +291,17 @@ public class LeaderFragment extends Fragment {
             LeaderBoard second = allUsers.get(1);
             secondplacename.setText(second.getUsername());
             secondplaecoin.setText(String.valueOf(second.getCoin()));
+            String imageKey = second.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = getResources().getIdentifier(imageKey, "drawable", getContext().getPackageName());
+                if (imageResId != 0) {
+                    secongplaceimg.setImageResource(imageResId);
+                } else {
+                    secongplaceimg.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                secongplaceimg.setImageResource(R.drawable.unknownprofile);
+            }
             seocndplace.setVisibility(View.VISIBLE);
         } else {
             seocndplace.setVisibility(View.GONE);
@@ -285,6 +311,17 @@ public class LeaderFragment extends Fragment {
             LeaderBoard third = allUsers.get(2);
             thirdplacename.setText(third.getUsername());
             thirdplacecoin.setText(String.valueOf(third.getCoin()));
+            String imageKey = third.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = getResources().getIdentifier(imageKey, "drawable", getContext().getPackageName());
+                if (imageResId != 0) {
+                    thirdplaceimg.setImageResource(imageResId);
+                } else {
+                    thirdplaceimg.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                thirdplaceimg.setImageResource(R.drawable.unknownprofile);
+            }
             thirdplace.setVisibility(View.VISIBLE);
         } else {
             thirdplace.setVisibility(View.GONE);
@@ -304,8 +341,9 @@ public class LeaderFragment extends Fragment {
                         String name = userSnapshot.child("name").getValue(String.class);
                         String userId = userSnapshot.child("userid").getValue(String.class);
                         int coin = userSnapshot.child("coin").getValue(Integer.class);
+                        String p=userSnapshot.child("profile").getValue(String.class);
 
-                        allUsers.add(new LeaderBoard(name, userId, coin, 0));
+                        allUsers.add(new LeaderBoard(name, userId, coin, 0,p));
                     }
 
                     // Sort by coins and ensure no duplicates

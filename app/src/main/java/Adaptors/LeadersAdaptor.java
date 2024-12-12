@@ -2,6 +2,7 @@ package Adaptors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.RapCodeTechnologies.Quiz.ProfileActivity;
 import com.RapCodeTechnologies.Quiz.R;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -75,6 +77,17 @@ public class LeadersAdaptor extends RecyclerView.Adapter<LeadersAdaptor.viewhold
             username.setText(leaderBoard.getUsername());
             no.setText(String.valueOf(leaderBoard.getNo()));
             coin.setText(String.valueOf(leaderBoard.getCoin()));
+            String imageKey = leaderBoard.getProfile();
+            if (!TextUtils.isEmpty(imageKey)) {
+                int imageResId = context.getResources().getIdentifier(imageKey, "drawable", context.getPackageName());
+                if (imageResId != 0) {
+                    profileimg.setImageResource(imageResId);
+                } else {
+                    profileimg.setImageResource(R.drawable.unknownprofile);
+                }
+            } else {
+                profileimg.setImageResource(R.drawable.unknownprofile);
+            }
         }
     }
 }

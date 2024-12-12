@@ -4,11 +4,12 @@ public class LeaderBoard {
     private String username,userid;
 
     private int no,coin;
-
-    public LeaderBoard(String username,String userid, int coin,  int no) {
+    private String profile;
+    public LeaderBoard(String username,String userid, int coin,  int no,String profile) {
         this.username = username;
         this.coin = coin;
         this.userid = userid;
+        this.profile=profile;
         this.no = no;
     }
 
@@ -31,6 +32,14 @@ public class LeaderBoard {
 
     public String getUserid() {
         return userid;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public void setUserid(String userid) {

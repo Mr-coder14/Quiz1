@@ -52,22 +52,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_toolbar"
         android:layout_margin="10dp"
+        android:background="@drawable/white_bg"
         android:id="@+id/search_user_layout">
 
         <EditText
             android:id="@+id/search_edittxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:fontFamily="@font/plus"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/search_user_btn"
-            android:background="@drawable/white_bg"
+            android:background="@null"
             android:elevation="4dp"
             android:hint="Username"
-            android:imeOptions="actionSearch"
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/black"
@@ -79,10 +75,7 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="4dp"
             android:src="@drawable/search_icon"
@@ -93,7 +86,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_user_layout"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         android:id="@+id/search_recycular_view"/>
 
 </RelativeLayout>
