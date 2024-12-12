@@ -48,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="16dp"
                         android:orientation="horizontal">
 
@@ -128,13 +128,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:padding="6dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
+                            android:layout_margin="10dp"
                             android:fontFamily="@font/lato"
                             android:lines="1"
                             android:layout_weight="1"
@@ -147,15 +147,14 @@
                             android:id="@+id/seeallquizzes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="150dp"
                             android:fontFamily="@font/lato"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:lines="1"
                             android:layout_marginBottom="15dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="8dp"
                             android:text="See All>>"
                             android:textColor="#fcba03"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 

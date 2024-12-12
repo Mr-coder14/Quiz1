@@ -20,7 +20,6 @@ public class SplashActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         auth = FirebaseAuth.getInstance();
 
-
         new Handler().postDelayed(() -> {
             FirebaseUser userid = auth.getCurrentUser();
             Intent intent;
